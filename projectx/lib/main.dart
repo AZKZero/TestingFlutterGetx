@@ -1,7 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/selection_controller.dart';
+import 'package:projectx/testing_list.dart';
+import 'package:projectx/testing_list_2.dart';
 import 'package:projectx/tile_button.dart';
 
 void main() {
@@ -59,6 +60,25 @@ class NewHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              OutlinedButton(
+                  onPressed: () {
+                    Get.to(const TestingList());
+                  },
+                  child: const Text("Test List 1")),
+              OutlinedButton(
+                  onPressed: () {
+                    Get.to(TestingListWithoutMixin());
+                  },
+                  child: const Text("Test List 2")),
+            ],
+          ),
+        ),
+      ),
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
