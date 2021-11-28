@@ -30,9 +30,7 @@ class TestingDBList extends StatelessWidget {
               Row(
                 children: [
                   TextButton(
-                      onPressed: () {
-                        controller.saveCurrentText("Unknown");
-                      },
+                      onPressed: () => controller.saveCurrentText("Unknown"),
                       child: const Text("Extra")),
                   TextButton(
                       onPressed: () {
@@ -44,11 +42,19 @@ class TestingDBList extends StatelessWidget {
                       child: const Text("Delete All")),
                 ],
               ),
-              if(controller.scheduleUpdate.value)
-              const CircularProgressIndicator.adaptive(
-                      value: null,
-                    ),
-              Flexible(
+              Expanded(
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  fit: StackFit.expand,
+                  alignment: Alignment.topCenter,
+                  children: [
+                    if (controller.scheduleUpdate.value)
+                      const Positioned(
+                        child: CircularProgressIndicator.adaptive(
+                          value: null,
+                        ),
+                      ),
+                    Positioned.fill(
                       child: StreamBuilder<List<Log>>(
                           initialData: const [],
                           stream: allLogsAsStream,
@@ -58,6 +64,9 @@ class TestingDBList extends StatelessWidget {
                                   ? ListNew(items: snapshot.data!)
                                   : const Text("No Items")),
                     ),
+                  ],
+                ),
+              )
             ],
           );
         },

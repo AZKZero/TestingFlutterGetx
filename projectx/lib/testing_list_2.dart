@@ -13,16 +13,16 @@ class TestingListWithoutMixin extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Testing list = ${controller.currentText.value}"),
-        backgroundColor: controller.currentColor.value,
+        backgroundColor: controller.currentColor,
       ),
       body: Center(
         child: Row(
           children: [
-            Expanded(child: Obx(() => ListBase(base: controller.currentText.value, background: controller.currentColor.value))),
+            Expanded(child: Obx(() => ListBase(base: controller.currentText.value, background: controller.currentColor))),
             Expanded(
                 child: TextButton(
               onPressed: () {
-                controller.currentText.value += " addition";
+                controller.saveCurrentText(controller.currentText.value + " addition");
               },
               child: const Text("stateless controller"),
             ))

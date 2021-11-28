@@ -14,9 +14,9 @@ class TestingList extends StatelessWidget {
           Scaffold(
             appBar: AppBar(
               title: Text("Testing list = ${controller.currentText.value}"),
-              backgroundColor: controller.currentColor.value,
+              backgroundColor: controller.currentColor,
             ),
-            body: ListBase(base: controller.currentText.value, background: controller.currentColor.value),
+            body: ListBase(base: controller.currentText.value, background: controller.currentColor),
           ),
     );
   }

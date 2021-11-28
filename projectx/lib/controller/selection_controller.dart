@@ -6,7 +6,7 @@ import 'package:projectx/database/models/log_model.dart';
 
 class SelectionController extends GetxController {
   var currentText = "None".obs;
-  var currentColor = Colors.white.obs;
+  var currentColor = Colors.white;
   var scheduleUpdate = false.obs;
 
   DBController controller = Get.find();

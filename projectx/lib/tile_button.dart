@@ -23,12 +23,12 @@ class TileButton extends StatelessWidget {
             icon: const Icon(Icons.ac_unit_rounded),
             onLongPress: () {
               controller?.currentText.value = buttonTitle;
-              controller?.currentColor.value = buttonBack;
+              controller?.currentColor = buttonBack;
               Get.to(TestingListWithoutMixin());
             },
             onPressed: () {
-              controller?.currentText.value = buttonTitle;
-              controller?.currentColor.value = buttonBack;
+              controller?.saveCurrentText(buttonTitle);
+              controller?.currentColor = buttonBack;
               if (navigate) {
                 Get.to(TestingListWithoutMixin());
               }

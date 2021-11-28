@@ -69,31 +69,29 @@ class NewHomePage extends StatelessWidget {
     return Scaffold(
       drawer: SafeArea(
         child: Drawer(
-          child: Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-               /* const FractionallySizedBox(
-                  heightFactor: 0.2,
-                  widthFactor: 1,
-                ),*/
-                OutlinedButton(
-                    onPressed: () {
-                      Get.to(const TestingList());
-                    },
-                    child: const Text("Test List 1")),
-                OutlinedButton(
-                    onPressed: () {
-                      Get.to(TestingListWithoutMixin());
-                    },
-                    child: const Text("Test List 2")),
-                OutlinedButton(
-                    onPressed: () {
-                      Get.to(TestingDBList());
-                    },
-                    child: const Text("DB List 1")),
-              ],
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+             /* const FractionallySizedBox(
+                heightFactor: 0.2,
+                widthFactor: 1,
+              ),*/
+              OutlinedButton(
+                  onPressed: () {
+                    Get.to(const TestingList());
+                  },
+                  child: const Text("Test List 1")),
+              OutlinedButton(
+                  onPressed: () {
+                    Get.to(TestingListWithoutMixin());
+                  },
+                  child: const Text("Test List 2")),
+              OutlinedButton(
+                  onPressed: () {
+                    Get.to(TestingDBList());
+                  },
+                  child: const Text("DB List 1")),
+            ],
           ),
         ),
       ),
