@@ -1,23 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:projectx/controller/db_controller.dart';
 import 'package:projectx/controller/selection_controller.dart';
 import 'package:projectx/testing_list.dart';
 import 'package:projectx/testing_list_2.dart';
+import 'package:projectx/testing_list_3.dart';
 import 'package:projectx/tile_button.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final DBController controllerDB = DBController();
+  await controllerDB.initializeDB();
+  runApp(MyApp(controllerDB));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final DBController controllerDB;
+
+  const MyApp(this.controllerDB, {Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Flutter Demo',
-      initialBinding: BindingsBuilder(() => {Get.put(SelectionController())}),
+      initialBinding: BindingsBuilder(() => {Get.put(controllerDB), Get.put(SelectionController())}),
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -60,22 +67,33 @@ class NewHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              OutlinedButton(
-                  onPressed: () {
-                    Get.to(const TestingList());
-                  },
-                  child: const Text("Test List 1")),
-              OutlinedButton(
-                  onPressed: () {
-                    Get.to(TestingListWithoutMixin());
-                  },
-                  child: const Text("Test List 2")),
-            ],
+      drawer: SafeArea(
+        child: Drawer(
+          child: Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+               /* const FractionallySizedBox(
+                  heightFactor: 0.2,
+                  widthFactor: 1,
+                ),*/
+                OutlinedButton(
+                    onPressed: () {
+                      Get.to(const TestingList());
+                    },
+                    child: const Text("Test List 1")),
+                OutlinedButton(
+                    onPressed: () {
+                      Get.to(TestingListWithoutMixin());
+                    },
+                    child: const Text("Test List 2")),
+                OutlinedButton(
+                    onPressed: () {
+                      Get.to(TestingDBList());
+                    },
+                    child: const Text("DB List 1")),
+              ],
+            ),
           ),
         ),
       ),
@@ -98,20 +116,20 @@ class NewHomePage extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        TileButton(controller: controller, buttonTitle: "QMS", buttonBack: Colors.lime),
-                        TileButton(controller: controller, buttonTitle: "Project", buttonBack: Colors.orangeAccent),
+                        Expanded(child: TileButton(controller: controller, buttonTitle: "QMS", buttonBack: Colors.lime)),
+                        Expanded(child: TileButton(controller: controller, buttonTitle: "Project", buttonBack: Colors.orangeAccent)),
                       ],
                     ),
                     Row(
                       children: [
-                        TileButton(controller: controller, buttonTitle: "Form", buttonBack: Colors.blue),
-                        TileButton(controller: controller, buttonTitle: "Documents", buttonBack: Colors.amber),
+                        Expanded(child: TileButton(controller: controller, buttonTitle: "Form", buttonBack: Colors.blue)),
+                        Expanded(child: TileButton(controller: controller, buttonTitle: "Documents", buttonBack: Colors.amber)),
                       ],
                     ),
                     Row(
                       children: [
-                        TileButton(controller: controller, buttonTitle: "Tickets", buttonBack: Colors.teal),
-                        TileButton(controller: controller, buttonTitle: "Assets", buttonBack: Colors.red),
+                        Expanded(child: TileButton(controller: controller, buttonTitle: "Tickets", buttonBack: Colors.teal)),
+                        Expanded(child: TileButton(controller: controller, buttonTitle: "Assets", buttonBack: Colors.red)),
                       ],
                     ),
                   ],
