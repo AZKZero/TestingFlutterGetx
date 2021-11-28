@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/selection_controller.dart';
-import 'package:projectx/list_base.dart';
+import 'package:projectx/ui/components/lists/list_base.dart';
 
 class TestingListWithoutMixin extends StatelessWidget {
   TestingListWithoutMixin({Key? key}) : super(key: key);

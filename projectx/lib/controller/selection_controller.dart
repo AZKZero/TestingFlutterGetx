@@ -27,7 +27,7 @@ class SelectionController extends GetxController {
 
   void deleteAllLogs({String? id}) async {
     scheduleUpdate.value = true;
-    await controller.logDao.deleteLogs();
+    await controller.logDao.deleteAllLogs();
     scheduleUpdate.value = false;
     // if (id != null) update(List.generate(1, (index) => id), true);
   }

@@ -11,4 +11,11 @@ abstract class LogDao {
 
   @Query("DELETE FROM logs")
   Future<void> deleteLogs();
+
+  @update
+  Future<void> blankUpdateLog(Log blank);
+
+  Future<void> deleteAllLogs() async {
+    await deleteLogs().then((value) => blankUpdateLog(Log(id: 0)));
+  }
 }

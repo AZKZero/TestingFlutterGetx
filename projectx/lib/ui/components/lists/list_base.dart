@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projectx/tile_button.dart';
+import 'package:projectx/ui/components/tile_button.dart';
 
 class ListBase extends StatelessWidget {
   const ListBase({Key? key, required this.base, required this.background}) : super(key: key);

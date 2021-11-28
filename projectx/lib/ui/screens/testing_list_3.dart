@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/db_controller.dart';
 import 'package:projectx/controller/selection_controller.dart';
-import 'package:projectx/list_base_2.dart';
+import 'package:projectx/ui/components/lists/list_base_2.dart';
 
-import 'database/models/log_model.dart';
+import '../../database/models/log_model.dart';
 
 class TestingDBList extends StatelessWidget {
   TestingDBList({Key? key}) : super(key: key);
@@ -29,14 +29,12 @@ class TestingDBList extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  TextButton(
-                      onPressed: () => controller.saveCurrentText("Unknown"),
-                      child: const Text("Extra")),
+                  TextButton(onPressed: () => controller.saveCurrentText("Unknown"), child: const Text("Extra")),
                   TextButton(
                       onPressed: () {
                         log((TestingDBList).toString());
                         controller.deleteAllLogs(id: (TestingDBList).toString());
-                        allLogsAsStream = null;
+                        // allLogsAsStream = null;
                         log("AWAITED");
                       },
                       child: const Text("Delete All")),
@@ -45,7 +43,6 @@ class TestingDBList extends StatelessWidget {
               Expanded(
                 child: Stack(
                   clipBehavior: Clip.none,
-                  fit: StackFit.expand,
                   alignment: Alignment.topCenter,
                   children: [
                     if (controller.scheduleUpdate.value)
@@ -54,16 +51,17 @@ class TestingDBList extends StatelessWidget {
                           value: null,
                         ),
                       ),
-                    Positioned.fill(
-                      child: StreamBuilder<List<Log>>(
-                          initialData: const [],
-                          stream: allLogsAsStream,
-                          builder: (BuildContext context, AsyncSnapshot<List<Log>> snapshot) => snapshot.hasError
-                              ? const Text("No Items")
-                              : snapshot.hasData
-                                  ? ListNew(items: snapshot.data!)
-                                  : const Text("No Items")),
-                    ),
+                    if (!controller.scheduleUpdate.value)
+                      Positioned.fill(
+                        child: StreamBuilder<List<Log>>(
+                            initialData: const [],
+                            stream: allLogsAsStream,
+                            builder: (BuildContext context, AsyncSnapshot<List<Log>> snapshot) => snapshot.hasError
+                                ? const Text("No Items")
+                                : snapshot.hasData && snapshot.data!.isNotEmpty
+                                    ? ListNew(items: snapshot.data!)
+                                    : const Text("No Items")),
+                      ),
                   ],
                 ),
               )

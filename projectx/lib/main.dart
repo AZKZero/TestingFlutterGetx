@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/db_controller.dart';
+import 'package:projectx/controller/network_controller.dart';
 import 'package:projectx/controller/selection_controller.dart';
-import 'package:projectx/testing_list.dart';
-import 'package:projectx/testing_list_2.dart';
-import 'package:projectx/testing_list_3.dart';
-import 'package:projectx/tile_button.dart';
+import 'package:projectx/controller/tasks/task_controller.dart';
+import 'package:projectx/ui/components/tile_button.dart';
+import 'package:projectx/ui/screens/testing_list.dart';
+import 'package:projectx/ui/screens/testing_list_2.dart';
+import 'package:projectx/ui/screens/testing_list_3.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Flutter Demo',
-      initialBinding: BindingsBuilder(() => {Get.put(controllerDB), Get.put(SelectionController())}),
+      initialBinding: BindingsBuilder(() => {Get.put(controllerDB), Get.put(SelectionController()), Get.put(NetworkController()), Get.create<TaskController>(() => TaskController())}),
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -37,7 +39,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const NewHomePage(title: 'Flutter Demo Home Page'),
+      home: NewHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -61,18 +63,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class NewHomePage extends StatelessWidget {
-  const NewHomePage({Key? key, required this.title}) : super(key: key);
+  NewHomePage({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
   Widget build(BuildContext context) {
+    TaskController controllerT = Get.find();
     return Scaffold(
       drawer: SafeArea(
         child: Drawer(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-             /* const FractionallySizedBox(
+              /* const FractionallySizedBox(
                 heightFactor: 0.2,
                 widthFactor: 1,
               ),*/
@@ -132,6 +135,30 @@ class NewHomePage extends StatelessWidget {
                     ),
                   ],
                 )),
+                // if (controllerT.requestResult.value)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
+                  child: Text(
+                    /*controllerT.requestResult.value ? */controllerT.result.value?.toString() ?? "N/A"/* : "Failed"*/,
+                    maxLines: null,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
+                  child: SimpleTileButton(
+                    buttonTitle: "TestRetrofit: Should Succeed",
+                    onPressed: () => controllerT.getTask(),
+                    buttonBack: controllerT.requestResult.value ? Colors.green : Colors.red,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
+                  child: SimpleTileButton(
+                    buttonTitle: "TestRetrofit: Should Fail",
+                    onPressed: () => controllerT.getTask(true),
+                    buttonBack: /* controllerT.requestResult.value ? Colors.green : */ Colors.red,
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
                   child: Text(
