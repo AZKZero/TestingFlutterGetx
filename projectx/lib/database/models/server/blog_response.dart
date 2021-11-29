@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:projectx/database/models/author.dart';
-import 'package:projectx/database/models/blog.dart';
+import 'package:projectx/database/models/application/author.dart';
+import 'package:projectx/database/models/application/blog.dart';
 
 part 'blog_response.g.dart';
 

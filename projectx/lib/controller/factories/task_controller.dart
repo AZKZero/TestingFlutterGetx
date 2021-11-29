@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:projectx/controller/network_controller.dart';
-import 'package:projectx/database/models/sample.dart';
+import 'package:projectx/database/models/application/sample.dart';
 
 class TaskController extends GetxController {
   NetworkController controller = Get.find();

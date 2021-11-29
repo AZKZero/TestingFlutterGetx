@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:floor/floor.dart';
 import 'package:projectx/database/converters/list_converter.dart';
-import 'package:projectx/database/models/author.dart';
-import 'package:projectx/database/models/blog.dart';
-import 'package:projectx/database/models/log_model.dart';
+import 'package:projectx/database/models/application/author.dart';
+import 'package:projectx/database/models/application/blog.dart';
+import 'package:projectx/database/models/application/log_model.dart';
 import 'package:projectx/database/provider/blog_dao.dart';
 import 'package:projectx/database/provider/log_dao.dart';
 

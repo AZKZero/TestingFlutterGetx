@@ -1,6 +1,6 @@
 import 'package:floor/floor.dart';
-import 'package:projectx/database/models/author.dart';
-import 'package:projectx/database/models/blog.dart';
+import 'package:projectx/database/models/application/author.dart';
+import 'package:projectx/database/models/application/blog.dart';
 import 'package:projectx/database/models/generated/blog_author.dart';
 
 @dao

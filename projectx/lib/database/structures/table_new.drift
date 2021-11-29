@@ -1,0 +1,7 @@
+CREATE TABLE blogs (
+	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	title TEXT,
+	description TEXT,
+	author_id INTEGER,
+	cover_photo TEXT
+)

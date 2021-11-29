@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:projectx/database/models/sample.dart';
+import 'package:projectx/database/models/application/sample.dart';
 import 'package:projectx/database/models/server/blog_response.dart';
 import 'package:retrofit/dio.dart';
 import 'package:retrofit/http.dart';
