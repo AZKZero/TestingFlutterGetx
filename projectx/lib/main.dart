@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/db_controller.dart';
+import 'package:projectx/controller/factories/blog_controller.dart';
+import 'package:projectx/controller/factories/task_controller.dart';
 import 'package:projectx/controller/network_controller.dart';
 import 'package:projectx/controller/selection_controller.dart';
-import 'package:projectx/controller/tasks/task_controller.dart';
 import 'package:projectx/ui/components/tile_button.dart';
-import 'package:projectx/ui/screens/testing_list.dart';
-import 'package:projectx/ui/screens/testing_list_2.dart';
-import 'package:projectx/ui/screens/testing_list_3.dart';
+import 'package:projectx/ui/screens/misc/testing_list.dart';
+import 'package:projectx/ui/screens/misc/testing_list_2.dart';
+import 'package:projectx/ui/screens/misc/testing_list_3.dart';
+import 'package:projectx/ui/screens/test/activity_main.dart';
+
+import 'controller/factories/task_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +30,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Flutter Demo',
-      initialBinding: BindingsBuilder(() => {Get.put(controllerDB), Get.put(SelectionController()), Get.put(NetworkController()), Get.create<TaskController>(() => TaskController())}),
+      initialBinding: BindingsBuilder(() => {
+            Get.put(controllerDB),
+            Get.put(SelectionController()),
+            Get.put(NetworkController()),
+            Get.create<TaskController>(() => TaskController()),
+            Get.create<BlogController>(() => BlogController())
+          }),
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -94,6 +104,11 @@ class NewHomePage extends StatelessWidget {
                     Get.to(TestingDBList());
                   },
                   child: const Text("DB List 1")),
+              OutlinedButton(
+                  onPressed: () {
+                    Get.to(ActivityMain());
+                  },
+                  child: const Text("Blog List 1")),
             ],
           ),
         ),
@@ -139,7 +154,8 @@ class NewHomePage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
                   child: Text(
-                    /*controllerT.requestResult.value ? */controllerT.result.value?.toString() ?? "N/A"/* : "Failed"*/,
+                    /*controllerT.requestResult.value ? */
+                    controllerT.result.value?.toString() ?? "N/A" /* : "Failed"*/,
                     maxLines: null,
                   ),
                 ),
