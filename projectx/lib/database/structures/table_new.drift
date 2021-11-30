@@ -3,5 +3,13 @@ CREATE TABLE blogs (
 	title TEXT,
 	description TEXT,
 	author_id INTEGER,
-	cover_photo TEXT
+	cover_photo TEXT,
+	categories TEXT
+);
+
+CREATE TABLE authors(
+	id INTEGER NOT NULL PRIMARY KEY,
+	name TEXT NOT NULL,
+	avatar TEXT NOT NULL,
+	profession TEXT NOT NULL
 )
