@@ -5,7 +5,7 @@ part 'author.g.dart';
 
 @JsonSerializable()
 @Entity(tableName: "authors")
-class Author {
+class AuthorOld {
   @JsonKey(name: "id")
   @PrimaryKey(autoGenerate: true)
   @ColumnInfo(name: "id")
@@ -23,9 +23,9 @@ class Author {
   @ColumnInfo(name: "profession")
   String? profession;
 
-  Author({this.id, this.name, this.avatar, this.profession});
+  AuthorOld({this.id, this.name, this.avatar, this.profession});
 
-  factory Author.fromJson(Map<String, dynamic> json) => _$AuthorFromJson(json);
+  factory AuthorOld.fromJson(Map<String, dynamic> json) => _$AuthorOldFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AuthorToJson(this);
+  Map<String, dynamic> toJson() => _$AuthorOldToJson(this);
 }

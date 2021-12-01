@@ -6,7 +6,7 @@ part 'blog_response.g.dart';
 
 @JsonSerializable()
 class BlogResponse {
-  List<RemoteBlog>? blogs;
+  List<Blog>? blogs;
 
   BlogResponse();
 
@@ -28,7 +28,7 @@ class RemoteBlog {
   @JsonKey(name: "cover_photo")
   String? coverPhoto;
 
-  Author? author;
+  // Author? author;
 
   List<String>? categories;
 
@@ -36,7 +36,7 @@ class RemoteBlog {
 
   Map<String, dynamic> toJson() => _$RemoteBlogToJson(this);
 
-  Blog getBlog() {
+ /* Blog getBlog() {
     return Blog(id: id, title: title, description: description, coverPhoto: coverPhoto, authorId: author?.id);
-  }
+  }*/
 }

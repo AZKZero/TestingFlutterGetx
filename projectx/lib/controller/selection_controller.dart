@@ -2,7 +2,7 @@ import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/db_controller.dart';
-import 'package:projectx/database/models/application/log_model.dart';
+import 'package:projectx/database/drift_database.dart';
 
 class SelectionController extends GetxController {
   var currentText = "None".obs;

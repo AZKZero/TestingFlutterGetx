@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:projectx/controller/db_controller.dart';
 import 'package:projectx/controller/network_controller.dart';
@@ -16,23 +19,32 @@ class BlogController extends GetxController {
 
   Future<void> getBlogs() async {
     try {
-      if (result.value == null && DateTime.now().millisecondsSinceEpoch - currentTime > 5000) {
+      var blogCount = await controllerDB.blogDao.getBlogsCount();
+      var allblogs = await controllerDB.blogDao.getBlogs();
+      log("$blogCount $currentTime");
+
+      // allblogs?.forEach((element) => log("Found Blog $element"));
+
+      if (result.value == null && DateTime.now().millisecondsSinceEpoch - currentTime > 5000 && blogCount == 0) {
         requestInFlight.value = true;
         currentTime = DateTime.now().millisecondsSinceEpoch;
         HttpResponse<BlogResponse> response = await controller.client.getBlogs();
         requestResult.value = response.response.statusCode == 200;
         result.value = response.data;
+        log("${response.data}");
 
-        response.data.blogs?.forEach((element) {
-          controllerDB.blogDao.insertBlog(element.getBlog());
-        });
+        if (response.data.blogs != null) {
+          await controllerDB.blogDao.insertBlogAuthorV2(response.data.blogs!);
+        }
 
         requestInFlight.value = false;
       }
 
       // return result.value;
-    } catch (e) {
+    } catch (e, stacktrace) {
       requestResult.value = false;
+      e.printError();
+      stacktrace.printError();
       // return null;
     }
   }
