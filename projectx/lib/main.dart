@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/db_controller.dart';
@@ -15,6 +16,24 @@ import 'controller/factories/task_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  AwesomeNotifications().initialize(
+      // set the icon to null if you want to use the default app icon
+      //   'resource://drawable/res_app_icon',
+      null,
+      [
+        NotificationChannel(
+            channelGroupKey: 'basic_channel_group',
+            channelKey: 'basic_channel',
+            channelName: 'Basic notifications',
+            channelDescription: 'Notification channel for basic tests',
+            defaultColor: Color(0xFF9D50DD),
+            ledColor: Colors.white)
+      ],
+      // Channel groups are only visual and are not required
+      channelGroups: [NotificationChannelGroup(channelGroupkey: 'basic_channel_group', channelGroupName: 'Basic group')],
+      debug: true);
+
   final DBController controllerDB = DBController();
   await controllerDB.initializeDB();
   runApp(MyApp(controllerDB));
@@ -106,7 +125,16 @@ class NewHomePage extends StatelessWidget {
                   child: const Text("DB List 1")),
               OutlinedButton(
                   onPressed: () {
-                    Get.to(ActivityMain());
+                    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+                      if (!isAllowed) {
+                        // This is just a basic example. For real apps, you must show some
+                        // friendly dialog box before call the request method.
+                        // This is very important to not harm the user experience
+                        AwesomeNotifications().requestPermissionToSendNotifications();
+                      } else {
+                        Get.to(ActivityMain());
+                      }
+                    });
                   },
                   child: const Text("Blog List 1")),
             ],
@@ -152,7 +180,7 @@ class NewHomePage extends StatelessWidget {
                 )),
                 // if (controllerT.requestResult.value)
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Text(
                     /*controllerT.requestResult.value ? */
                     controllerT.result.value?.toString() ?? "N/A" /* : "Failed"*/,
@@ -160,7 +188,7 @@ class NewHomePage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: SimpleTileButton(
                     buttonTitle: "TestRetrofit: Should Succeed",
                     onPressed: () => controllerT.getTask(),
@@ -168,7 +196,7 @@ class NewHomePage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: SimpleTileButton(
                     buttonTitle: "TestRetrofit: Should Fail",
                     onPressed: () => controllerT.getTask(true),

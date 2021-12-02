@@ -19,7 +19,7 @@ class BlogController extends GetxController {
 
   Future<void> getBlogs() async {
     try {
-      var blogCount = await controllerDB.blogDao.getBlogsCount();
+      var blogCount = await controllerDB.blogDao.getBlogsCount().getSingle();
       // var allblogs = await controllerDB.blogDao.getBlogs();
       log("$blogCount $currentTime");
 

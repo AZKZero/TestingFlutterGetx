@@ -46,7 +46,8 @@ class BlogItem extends StatelessWidget {
             ),
             Wrap(
               spacing: 5,
-              children: [...(blogAuthor.blog.categories?.map((e) => Text(e, style: const TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold, letterSpacing: 1.5),)).toList() ?? List.filled(1, const Text("No Items")))],
+              // children: [...(blogAuthor.blog.categories?.map((e) => Text(e, style: const TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold, letterSpacing: 1.5),)).toList() ?? List.filled(1, const Text("No Items")))],
+              children: [...(blogAuthor.blog.categories?.map((e) => Chip(label: Text(e, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, letterSpacing: 1.5),), backgroundColor: Colors.blueGrey,)).toList() ?? List.filled(1, const Text("No Items")))],
             )
           ],
         ),
