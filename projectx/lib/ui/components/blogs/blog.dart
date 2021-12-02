@@ -26,16 +26,27 @@ class BlogItem extends StatelessWidget {
             Text(blogAuthor.blog.description ?? ""),
             Row(
               children: [
-                Image.network(
-                  blogAuthor.author.avatar ?? "",
-                  scale: 0.5,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.network(
+                    blogAuthor.author.avatar ?? "",
+                    height: 30,
+                    width: 30,
+                  ),
                 ),
-                Text(blogAuthor.author.name ?? ""),
-                Text(blogAuthor.author.profession ?? "")
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(blogAuthor.author.name ?? ""),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(blogAuthor.author.profession ?? ""),
+                )
               ],
             ),
             Wrap(
-              children: [...(blogAuthor.blog.categories?.map((e) => Text(e)).toList() ?? List.filled(1, const Text("No Items")))],
+              spacing: 5,
+              children: [...(blogAuthor.blog.categories?.map((e) => Text(e, style: const TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold, letterSpacing: 1.5),)).toList() ?? List.filled(1, const Text("No Items")))],
             )
           ],
         ),

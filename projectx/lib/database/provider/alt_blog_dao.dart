@@ -8,7 +8,16 @@ import 'package:projectx/database/structures/tables.dart';
 
 part 'alt_blog_dao.g.dart';
 
-@DriftAccessor(tables: [Blogs, AuthorTable], queries: {'getBlogCustomQuery': 'SELECT * FROM blogs WHERE id=:id'})
+@DriftAccessor(tables: [
+  Blogs,
+  AuthorTable
+], queries: {
+  'getBlogCustomQuery': 'SELECT * FROM blogs WHERE id=:id',
+  'getBlogIds': 'SELECT id, title FROM blogs',
+  'getBlogsCount': 'SELECT COUNT(*) FROM blogs',
+  'getBlogAuthorsRaw': 'select blog.**, author.** from blogs blog, author_table author where blog.author_id=author.id',
+  'getBlogAuthorsRawV2': 'select * from blogs inner join author_table author on author.id=blogs.author_id'
+})
 class AltBlogDao extends DatabaseAccessor<AltDriftDatabase> with _$AltBlogDaoMixin {
   AltBlogDao(AltDriftDatabase driftDatabase) : super(driftDatabase);
 
@@ -21,7 +30,7 @@ class AltBlogDao extends DatabaseAccessor<AltDriftDatabase> with _$AltBlogDaoMix
     return (selectOnly(blogs)..addColumns([blogIds])).map((row) => row.read(blogIds)).watch();
   }
 
-  Future<int> getBlogsCount() {
+  Future<int> getBlogsCountDart() {
     var blogIdCount = blogs.id.count();
     return (selectOnly(blogs)..addColumns([blogIdCount])).map((row) => row.read(blogIdCount)).getSingle();
   }
