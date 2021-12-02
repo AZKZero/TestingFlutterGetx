@@ -46,7 +46,10 @@ class ActivityMain extends StatelessWidget {
                                     channelKey: 'basic_channel',
                                     title: 'Stream Received',
                                     body: 'Streamed?'
-                                )
+                                ),
+                              actionButtons: [
+                                NotificationActionButton(key: "yeh", label: "Testing", color: Colors.lightBlue, buttonType: ActionButtonType.KeepOnTop, autoDismissible: true)
+                              ]
                             );
                             List<BlogAuthor?>? data = snapshot.data;
                             return data != null
