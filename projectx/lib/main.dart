@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/db_controller.dart';
 import 'package:projectx/controller/factories/blog_controller.dart';
+import 'package:projectx/controller/factories/dialog_controller.dart';
 import 'package:projectx/controller/factories/task_controller.dart';
 import 'package:projectx/controller/network_controller.dart';
 import 'package:projectx/controller/selection_controller.dart';
@@ -12,6 +13,7 @@ import 'package:projectx/ui/components/tile_button.dart';
 import 'package:projectx/ui/screens/misc/testing_list.dart';
 import 'package:projectx/ui/screens/misc/testing_list_2.dart';
 import 'package:projectx/ui/screens/misc/testing_list_3.dart';
+import 'package:projectx/ui/screens/template/testing_ground.dart';
 import 'package:projectx/ui/screens/test/activity_main.dart';
 
 import 'controller/factories/task_controller.dart';
@@ -20,8 +22,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   AwesomeNotifications().initialize(
-      // set the icon to null if you want to use the default app icon
-      //   'resource://drawable/res_app_icon',
+    // set the icon to null if you want to use the default app icon
+    //   'resource://drawable/res_app_icon',
       null,
       [
         NotificationChannel(
@@ -50,19 +52,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AwesomeNotifications().actionStream.listen(
-            (ReceivedAction receivedAction){
-              log("notification ${receivedAction.buttonKeyPressed} ${receivedAction.groupKey} ${receivedAction.channelKey}");
+            (ReceivedAction receivedAction) {
+          log("notification ${receivedAction.buttonKeyPressed} ${receivedAction.groupKey} ${receivedAction.channelKey}");
         }
     );
     return GetMaterialApp(
       title: 'Flutter Demo',
-      initialBinding: BindingsBuilder(() => {
-            Get.put(controllerDB),
-            Get.put(SelectionController()),
-            Get.put(NetworkController()),
-            Get.create<TaskController>(() => TaskController()),
-            Get.create<BlogController>(() => BlogController())
-          }),
+      initialBinding: BindingsBuilder(() =>
+      {
+        Get.put(controllerDB),
+        Get.put(SelectionController()),
+        Get.put(NetworkController()),
+        Get.create<TaskController>(() => TaskController()),
+        Get.create<BlogController>(() => BlogController()),
+        Get.create<DialogController>(() => DialogController())
+      }),
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -144,6 +148,9 @@ class NewHomePage extends StatelessWidget {
                     });
                   },
                   child: const Text("Blog List 1")),
+              OutlinedButton(onPressed: () {
+                Get.to(UITestingGrounds());
+              }, child: const Text("UI Testing ground"))
             ],
           ),
         ),
@@ -155,69 +162,70 @@ class NewHomePage extends StatelessWidget {
       ),
       body: MixinBuilder<SelectionController>(
         init: SelectionController(),
-        builder: (controller) => Center(
-            heightFactor: 1.0,
-            widthFactor: 1.0,
-            child: Column(
-              verticalDirection: VerticalDirection.down,
-              children: [
-                Expanded(
-                    child: Column(
+        builder: (controller) =>
+            Center(
+                heightFactor: 1.0,
+                widthFactor: 1.0,
+                child: Column(
                   verticalDirection: VerticalDirection.down,
                   children: [
-                    Row(
-                      children: [
-                        Expanded(child: TileButton(controller: controller, buttonTitle: "QMS", buttonBack: Colors.lime)),
-                        Expanded(child: TileButton(controller: controller, buttonTitle: "Project", buttonBack: Colors.orangeAccent)),
-                      ],
+                    Expanded(
+                        child: Column(
+                          verticalDirection: VerticalDirection.down,
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(child: TileButton(controller: controller, buttonTitle: "QMS", buttonBack: Colors.lime)),
+                                Expanded(child: TileButton(controller: controller, buttonTitle: "Project", buttonBack: Colors.orangeAccent)),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Expanded(child: TileButton(controller: controller, buttonTitle: "Form", buttonBack: Colors.blue)),
+                                Expanded(child: TileButton(controller: controller, buttonTitle: "Documents", buttonBack: Colors.amber)),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Expanded(child: TileButton(controller: controller, buttonTitle: "Tickets", buttonBack: Colors.teal)),
+                                Expanded(child: TileButton(controller: controller, buttonTitle: "Assets", buttonBack: Colors.red)),
+                              ],
+                            ),
+                          ],
+                        )),
+                    // if (controllerT.requestResult.value)
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        /*controllerT.requestResult.value ? */
+                        controllerT.result.value?.toString() ?? "N/A" /* : "Failed"*/,
+                        maxLines: null,
+                      ),
                     ),
-                    Row(
-                      children: [
-                        Expanded(child: TileButton(controller: controller, buttonTitle: "Form", buttonBack: Colors.blue)),
-                        Expanded(child: TileButton(controller: controller, buttonTitle: "Documents", buttonBack: Colors.amber)),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SimpleTileButton(
+                        buttonTitle: "TestRetrofit: Should Succeed",
+                        onPressed: () => controllerT.getTask(),
+                        buttonBack: controllerT.requestResult.value ? Colors.green : Colors.red,
+                      ),
                     ),
-                    Row(
-                      children: [
-                        Expanded(child: TileButton(controller: controller, buttonTitle: "Tickets", buttonBack: Colors.teal)),
-                        Expanded(child: TileButton(controller: controller, buttonTitle: "Assets", buttonBack: Colors.red)),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SimpleTileButton(
+                        buttonTitle: "TestRetrofit: Should Fail",
+                        onPressed: () => controllerT.getTask(true),
+                        buttonBack: /* controllerT.requestResult.value ? Colors.green : */ Colors.red,
+                      ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
+                      child: Text(
+                        'Currently selected: ${controller.currentText.value}',
+                      ),
+                    )
                   ],
                 )),
-                // if (controllerT.requestResult.value)
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    /*controllerT.requestResult.value ? */
-                    controllerT.result.value?.toString() ?? "N/A" /* : "Failed"*/,
-                    maxLines: null,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SimpleTileButton(
-                    buttonTitle: "TestRetrofit: Should Succeed",
-                    onPressed: () => controllerT.getTask(),
-                    buttonBack: controllerT.requestResult.value ? Colors.green : Colors.red,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SimpleTileButton(
-                    buttonTitle: "TestRetrofit: Should Fail",
-                    onPressed: () => controllerT.getTask(true),
-                    buttonBack: /* controllerT.requestResult.value ? Colors.green : */ Colors.red,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
-                  child: Text(
-                    'Currently selected: ${controller.currentText.value}',
-                  ),
-                )
-              ],
-            )),
       ),
     );
   }
