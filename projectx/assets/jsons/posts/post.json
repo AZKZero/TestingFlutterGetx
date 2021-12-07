@@ -3,5 +3,6 @@
   "avatar": "https://i.pravatar.cc/250",
   "likes": 100,
   "is_liked": true,
-  "comments": 100
+  "comments": 100,
+  "description": ""
 }

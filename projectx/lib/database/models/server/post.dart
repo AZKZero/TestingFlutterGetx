@@ -1,5 +1,6 @@
 class Post {
   String? username;
+  String? description;
   String? avatar;
   int? likes;
   bool? isLiked;
@@ -13,6 +14,7 @@ class Post {
     likes = json['likes'];
     isLiked = json['is_liked'];
     comments = json['comments'];
+    description = json['description'];
   }
 
   Map<String, dynamic> toJson() {
@@ -22,6 +24,7 @@ class Post {
     data['likes'] = likes;
     data['is_liked'] = isLiked;
     data['comments'] = comments;
+    data['description'] = description;
     return data;
   }
 }
