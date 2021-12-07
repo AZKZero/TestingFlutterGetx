@@ -17,6 +17,7 @@ import 'package:projectx/ui/screens/template/testing_ground.dart';
 import 'package:projectx/ui/screens/test/activity_main.dart';
 
 import 'controller/factories/task_controller.dart';
+import 'ui/components/alt_colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,7 +54,7 @@ ThemeData _darkTheme = ThemeData(
 
 ThemeData _lightTheme = ThemeData(
   // brightness: Brightness.light,
-  colorScheme: ColorScheme.fromSwatch().copyWith(primary: Colors.blue, brightness: Brightness.light, secondary: Colors.green),
+  colorScheme: ColorScheme.fromSwatch().copyWith(primary: ColorsLight.linearGradientStart, brightness: Brightness.light, secondary: Colors.green),
 );
 
 bool currentThemeModeLight = true;

@@ -5,6 +5,7 @@ import 'package:projectx/main.dart';
 import 'package:projectx/ui/screens/template/dialogs/dialog1.dart';
 import 'package:projectx/ui/screens/template/dialogs/dialog_login.dart';
 import 'package:projectx/ui/screens/template/dialogs/dialog_login_otp.dart';
+import 'package:projectx/ui/screens/template/login_screen.dart';
 
 import 'dialogs/dialog_login_alt.dart';
 
@@ -15,7 +16,6 @@ class UITestingGrounds extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
           title: const Text("UI Testing Grounds"),
@@ -33,21 +33,21 @@ class UITestingGrounds extends StatelessWidget {
                 children: [
                   Expanded(
                       child: OutlinedButton(
-                        onPressed: () async {
-                          dialogController.result.value = await Get.dialog(Dialog1(), useSafeArea: true);
-                        },
-                        child: const Text("Dialog"),
-                      )),
+                    onPressed: () async {
+                      dialogController.result.value = await Get.dialog(Dialog1(), useSafeArea: true);
+                    },
+                    child: const Text("Dialog"),
+                  )),
                   const SizedBox(
                     width: 10,
                   ),
                   Expanded(
                       child: OutlinedButton(
-                        onPressed: () async {
-                          dialogController.result.value = await Get.dialog(DialogLoginOTP(), useSafeArea: true);
-                        },
-                        child: const Text("Dialog OTP"),
-                      )),
+                    onPressed: () async {
+                      dialogController.result.value = await Get.dialog(DialogLoginOTP(), useSafeArea: true);
+                    },
+                    child: const Text("Dialog OTP"),
+                  )),
                 ],
               ),
               const SizedBox(
@@ -57,21 +57,25 @@ class UITestingGrounds extends StatelessWidget {
                 children: [
                   Expanded(
                       child: OutlinedButton(
-                        onPressed: () async {
-                          dialogController.result.value = await Get.dialog(DialogLoginAlt(), useSafeArea: true);
-                        },
-                        child: const Text("Dialog Alt"),
-                      )),
+                    onPressed: () async {
+                      dialogController.result.value = await Get.dialog(DialogLoginAlt(), useSafeArea: true);
+                    },
+                    child: const Text("Dialog Alt"),
+                  )),
                   const SizedBox(
                     width: 10,
                   ),
                   Expanded(
                       child: OutlinedButton(
-                        onPressed: () async {
-                          dialogController.result.value = await Get.dialog(DialogLoginAlt(filled: true,), useSafeArea: true);
-                        },
-                        child: const Text("Dialog AltFilled"),
-                      )),
+                    onPressed: () async {
+                      dialogController.result.value = await Get.dialog(
+                          DialogLoginAlt(
+                            filled: true,
+                          ),
+                          useSafeArea: true);
+                    },
+                    child: const Text("Dialog AltFilled"),
+                  )),
                 ],
               ),
               const SizedBox(
@@ -81,11 +85,21 @@ class UITestingGrounds extends StatelessWidget {
                 children: [
                   Expanded(
                       child: OutlinedButton(
-                        onPressed: () async {
-                          dialogController.result.value = await Get.dialog(DialogLogin(), useSafeArea: true);
-                        },
-                        child: const Text("Dialog Login"),
-                      )),
+                    onPressed: () async {
+                      dialogController.result.value = await Get.dialog(DialogLogin(), useSafeArea: true);
+                    },
+                    child: const Text("Dialog Login"),
+                  )),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                      child: OutlinedButton(
+                    onPressed: () async {
+                      dialogController.result.value = await Get.to(() => LoginScreen());
+                    },
+                    child: const Text("Screen Login"),
+                  )),
                 ],
               ),
               const SizedBox(
@@ -95,12 +109,12 @@ class UITestingGrounds extends StatelessWidget {
                 children: [
                   Expanded(
                       child: OutlinedButton(
-                        onPressed: () async {
-                          currentThemeModeLight = !currentThemeModeLight;
-                          Get.changeThemeMode(currentThemeModeLight ? ThemeMode.light : ThemeMode.dark);
-                        },
-                        child: const Text("Switch Theme"),
-                      )), /*
+                    onPressed: () async {
+                      currentThemeModeLight = !currentThemeModeLight;
+                      Get.changeThemeMode(currentThemeModeLight ? ThemeMode.light : ThemeMode.dark);
+                    },
+                    child: const Text("Switch Theme"),
+                  )), /*
                   const SizedBox(
                     width: 10,
                   ),
