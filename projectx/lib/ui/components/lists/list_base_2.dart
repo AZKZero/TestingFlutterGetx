@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projectx/database/models/log_model.dart';
+import 'package:projectx/database/drift_database.dart';
 import 'package:projectx/ui/components/tile_button.dart';
 import 'package:projectx/utils/name_colors.dart';
 

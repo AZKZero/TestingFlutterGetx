@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/selection_controller.dart';
-import 'package:projectx/ui/screens/testing_list_2.dart';
+import 'package:projectx/ui/screens/misc/testing_list_2.dart';
 
 class TileButton extends StatelessWidget {
   const TileButton({Key? key, required this.buttonTitle, required this.buttonBack, this.controller, this.navigate = false, this.padding = 20, this.margin = 20}) : super(key: key);

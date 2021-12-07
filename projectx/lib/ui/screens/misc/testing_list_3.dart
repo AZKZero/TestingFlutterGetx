@@ -6,7 +6,7 @@ import 'package:projectx/controller/db_controller.dart';
 import 'package:projectx/controller/selection_controller.dart';
 import 'package:projectx/ui/components/lists/list_base_2.dart';
 
-import '../../database/models/log_model.dart';
+import 'package:projectx/database/drift_database.dart';
 
 class TestingDBList extends StatelessWidget {
   TestingDBList({Key? key}) : super(key: key);

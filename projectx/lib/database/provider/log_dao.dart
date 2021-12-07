@@ -1,5 +1,5 @@
 import 'package:floor/floor.dart';
-import 'package:projectx/database/models/log_model.dart';
+import 'package:projectx/database/models/application/log_model.dart';
 
 @dao
 abstract class LogDao {
