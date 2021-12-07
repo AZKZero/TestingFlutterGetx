@@ -31,10 +31,13 @@ class DialogLoginOTP extends StatelessWidget {
           child: Card(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
               child: Obx(() => Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      const SizedBox(
+                        height: 50,
+                      ),
                       /*LayoutBuilder(
                     builder: (context, constraints) => PinCodeTextField(
                       maxLength: 7,
@@ -108,7 +111,10 @@ class DialogLoginOTP extends StatelessWidget {
                             child: const Text("Close"),
                           ),
                         ),
-                      ])
+                      ]),
+                      const SizedBox(
+                        height: 50,
+                      ),
                     ],
                   )),
             ),

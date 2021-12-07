@@ -22,8 +22,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   AwesomeNotifications().initialize(
-    // set the icon to null if you want to use the default app icon
-    //   'resource://drawable/res_app_icon',
+      // set the icon to null if you want to use the default app icon
+      //   'resource://drawable/res_app_icon',
       null,
       [
         NotificationChannel(
@@ -31,7 +31,7 @@ void main() async {
             channelKey: 'basic_channel',
             channelName: 'Basic notifications',
             channelDescription: 'Notification channel for basic tests',
-            defaultColor: Color(0xFF9D50DD),
+            defaultColor: const Color(0xFF9D50DD),
             ledColor: Colors.white)
       ],
       // Channel groups are only visual and are not required
@@ -43,6 +43,21 @@ void main() async {
   runApp(MyApp(controllerDB));
 }
 
+ThemeData _darkTheme = ThemeData(
+  // brightness: Brightness.dark,
+  primaryColor: Colors.amber,
+  primaryColorDark: Colors.amber,
+  primarySwatch: Colors.amber,
+  colorScheme: ColorScheme.fromSwatch().copyWith(primary:Colors.amber, brightness: Brightness.dark, surface: Colors.red),
+);
+
+ThemeData _lightTheme = ThemeData(
+  // brightness: Brightness.light,
+  colorScheme: ColorScheme.fromSwatch().copyWith(primary: Colors.blue, brightness: Brightness.light, secondary: Colors.green),
+);
+
+bool currentThemeModeLight = true;
+
 class MyApp extends StatelessWidget {
   final DBController controllerDB;
 
@@ -51,34 +66,22 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    AwesomeNotifications().actionStream.listen(
-            (ReceivedAction receivedAction) {
-          log("notification ${receivedAction.buttonKeyPressed} ${receivedAction.groupKey} ${receivedAction.channelKey}");
-        }
-    );
+    AwesomeNotifications().actionStream.listen((ReceivedAction receivedAction) {
+      log("notification ${receivedAction.buttonKeyPressed} ${receivedAction.groupKey} ${receivedAction.channelKey}");
+    });
     return GetMaterialApp(
       title: 'Flutter Demo',
-      initialBinding: BindingsBuilder(() =>
-      {
-        Get.put(controllerDB),
-        Get.put(SelectionController()),
-        Get.put(NetworkController()),
-        Get.create<TaskController>(() => TaskController()),
-        Get.create<BlogController>(() => BlogController()),
-        Get.create<DialogController>(() => DialogController())
-      }),
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
+      theme: _lightTheme,
+      darkTheme: _darkTheme,
+      themeMode: ThemeMode.light,
+      initialBinding: BindingsBuilder(() => {
+            Get.put(controllerDB),
+            Get.put(SelectionController()),
+            Get.put(NetworkController()),
+            Get.create<TaskController>(() => TaskController()),
+            Get.create<BlogController>(() => BlogController()),
+            Get.create<DialogController>(() => DialogController())
+          }),
       home: NewHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -148,9 +151,11 @@ class NewHomePage extends StatelessWidget {
                     });
                   },
                   child: const Text("Blog List 1")),
-              OutlinedButton(onPressed: () {
-                Get.to(UITestingGrounds());
-              }, child: const Text("UI Testing ground"))
+              OutlinedButton(
+                  onPressed: () {
+                    Get.to(UITestingGrounds());
+                  },
+                  child: const Text("UI Testing ground"))
             ],
           ),
         ),
@@ -162,70 +167,69 @@ class NewHomePage extends StatelessWidget {
       ),
       body: MixinBuilder<SelectionController>(
         init: SelectionController(),
-        builder: (controller) =>
-            Center(
-                heightFactor: 1.0,
-                widthFactor: 1.0,
-                child: Column(
+        builder: (controller) => Center(
+            heightFactor: 1.0,
+            widthFactor: 1.0,
+            child: Column(
+              verticalDirection: VerticalDirection.down,
+              children: [
+                Expanded(
+                    child: Column(
                   verticalDirection: VerticalDirection.down,
                   children: [
-                    Expanded(
-                        child: Column(
-                          verticalDirection: VerticalDirection.down,
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(child: TileButton(controller: controller, buttonTitle: "QMS", buttonBack: Colors.lime)),
-                                Expanded(child: TileButton(controller: controller, buttonTitle: "Project", buttonBack: Colors.orangeAccent)),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Expanded(child: TileButton(controller: controller, buttonTitle: "Form", buttonBack: Colors.blue)),
-                                Expanded(child: TileButton(controller: controller, buttonTitle: "Documents", buttonBack: Colors.amber)),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Expanded(child: TileButton(controller: controller, buttonTitle: "Tickets", buttonBack: Colors.teal)),
-                                Expanded(child: TileButton(controller: controller, buttonTitle: "Assets", buttonBack: Colors.red)),
-                              ],
-                            ),
-                          ],
-                        )),
-                    // if (controllerT.requestResult.value)
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        /*controllerT.requestResult.value ? */
-                        controllerT.result.value?.toString() ?? "N/A" /* : "Failed"*/,
-                        maxLines: null,
-                      ),
+                    Row(
+                      children: [
+                        Expanded(child: TileButton(controller: controller, buttonTitle: "QMS", buttonBack: Colors.lime)),
+                        Expanded(child: TileButton(controller: controller, buttonTitle: "Project", buttonBack: Colors.orangeAccent)),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SimpleTileButton(
-                        buttonTitle: "TestRetrofit: Should Succeed",
-                        onPressed: () => controllerT.getTask(),
-                        buttonBack: controllerT.requestResult.value ? Colors.green : Colors.red,
-                      ),
+                    Row(
+                      children: [
+                        Expanded(child: TileButton(controller: controller, buttonTitle: "Form", buttonBack: Colors.blue)),
+                        Expanded(child: TileButton(controller: controller, buttonTitle: "Documents", buttonBack: Colors.amber)),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SimpleTileButton(
-                        buttonTitle: "TestRetrofit: Should Fail",
-                        onPressed: () => controllerT.getTask(true),
-                        buttonBack: /* controllerT.requestResult.value ? Colors.green : */ Colors.red,
-                      ),
+                    Row(
+                      children: [
+                        Expanded(child: TileButton(controller: controller, buttonTitle: "Tickets", buttonBack: Colors.teal)),
+                        Expanded(child: TileButton(controller: controller, buttonTitle: "Assets", buttonBack: Colors.red)),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
-                      child: Text(
-                        'Currently selected: ${controller.currentText.value}',
-                      ),
-                    )
                   ],
                 )),
+                // if (controllerT.requestResult.value)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    /*controllerT.requestResult.value ? */
+                    controllerT.result.value?.toString() ?? "N/A" /* : "Failed"*/,
+                    maxLines: null,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SimpleTileButton(
+                    buttonTitle: "TestRetrofit: Should Succeed",
+                    onPressed: () => controllerT.getTask(),
+                    buttonBack: controllerT.requestResult.value ? Colors.green : Colors.red,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SimpleTileButton(
+                    buttonTitle: "TestRetrofit: Should Fail",
+                    onPressed: () => controllerT.getTask(true),
+                    buttonBack: /* controllerT.requestResult.value ? Colors.green : */ Colors.red,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
+                  child: Text(
+                    'Currently selected: ${controller.currentText.value}',
+                  ),
+                )
+              ],
+            )),
       ),
     );
   }
