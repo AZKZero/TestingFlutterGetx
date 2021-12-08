@@ -7,6 +7,7 @@ import 'package:projectx/controller/db_controller.dart';
 import 'package:projectx/controller/factories/blog_controller.dart';
 import 'package:projectx/controller/factories/dialog_controller.dart';
 import 'package:projectx/controller/factories/task_controller.dart';
+import 'package:projectx/controller/feed_controller.dart';
 import 'package:projectx/controller/network_controller.dart';
 import 'package:projectx/controller/selection_controller.dart';
 import 'package:projectx/ui/components/tile_button.dart';
@@ -79,6 +80,7 @@ class MyApp extends StatelessWidget {
             Get.put(controllerDB),
             Get.put(SelectionController()),
             Get.put(NetworkController()),
+            Get.put(FeedController()),
             Get.create<TaskController>(() => TaskController()),
             Get.create<BlogController>(() => BlogController()),
             Get.create<DialogController>(() => DialogController())

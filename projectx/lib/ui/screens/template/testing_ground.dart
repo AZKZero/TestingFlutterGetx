@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/factories/dialog_controller.dart';
 import 'package:projectx/main.dart';
+import 'package:projectx/ui/screens/feed.dart';
 import 'package:projectx/ui/screens/template/dialogs/dialog1.dart';
 import 'package:projectx/ui/screens/template/dialogs/dialog_login.dart';
 import 'package:projectx/ui/screens/template/dialogs/dialog_login_otp.dart';
@@ -100,6 +101,30 @@ class UITestingGrounds extends StatelessWidget {
                     },
                     child: const Text("Screen Login"),
                   )),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                      child: OutlinedButton(
+                    onPressed: () async {
+                      dialogController.result.value = await Get.to(() => Feed());
+                    },
+                    child: const Text("Feed Check"),
+                  )), /*
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                      child: OutlinedButton(
+                    onPressed: () async {
+                      dialogController.result.value = await Get.to(() => LoginScreen());
+                    },
+                    child: const Text("Screen Login"),
+                  )),*/
                 ],
               ),
               const SizedBox(
