@@ -11,19 +11,31 @@ class PostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.9, minWidth: 10, minHeight: 10, maxHeight: MediaQuery.of(context).size.height * 0.75),
-      child: Card(
-        child: InkWell(
-          onTap: onPressed,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IntrinsicHeight(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+    return Padding(
+      padding: const EdgeInsets.all(5),
+      child: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              blurRadius: 8,
+              spreadRadius: 0.0,
+              offset: const Offset(0,4)
+            )
+          ],
+        ),
+        child: Card(
+          elevation: 0,
+          shape: RoundedRectangleBorder(side: BorderSide.none, borderRadius: BorderRadius.circular(7.0)),
+          child: InkWell(
+            onTap: onPressed,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Container(
                         alignment: Alignment.bottomCenter,
@@ -45,35 +57,35 @@ class PostCard extends StatelessWidget {
                           size: 10.0,
                         ),
                       ),
-                      Container(alignment: Alignment.centerLeft, padding: const EdgeInsets.all(8.0), height: 30, child: Text(post.username ?? "")),
+                      Container(alignment: Alignment.centerLeft, padding: const EdgeInsets.all(8.0), height: 46, child: Text(post.username ?? "")),
                     ],
                   ),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                Row(
-                  children: [
-                    Expanded(child: Text(post.description ?? "")),
-                  ],
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                const Divider(
-                  thickness: 1,
-                  color: Colors.grey,
-                ),
-                Row(
-                  children: [
-                    TextButton.icon(onPressed: () {}, icon: const Icon(Icons.comment), label: Text(post.comments?.toString() ?? "")),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    TextButton.icon(onPressed: () {}, icon: const Icon(Icons.favorite), label: Text(post.likes?.toString() ?? "")),
-                  ],
-                )
-              ],
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(child: Text(post.description ?? "")),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  const Divider(
+                    thickness: 1,
+                    color: Colors.grey,
+                  ),
+                  Row(
+                    children: [
+                      TextButton.icon(onPressed: () {}, icon: const Icon(Icons.comment), label: Text(post.comments?.toString() ?? "")),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      TextButton.icon(onPressed: () {}, icon: const Icon(Icons.favorite), label: Text(post.likes?.toString() ?? "")),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),

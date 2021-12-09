@@ -15,6 +15,7 @@ class Feed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: const BoxDecoration(gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [ColorsLight.linearGradientStart, ColorsLight.linearGradientEnd])),
@@ -26,6 +27,53 @@ class Feed extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
+        child: Obx(() => Column(
+          children: [
+            Container(
+              constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.95, minWidth: 10, minHeight: 10, maxHeight: MediaQuery.of(context).size.height * 0.1),
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: _feedController.categories.length,
+                itemBuilder: (context, index) {
+                  var image = _feedController.categories[index].image;
+                  return image != null
+                      ? Image.asset(
+                    image,
+                    height: MediaQuery.of(context).size.height * 0.1,
+                  )
+                      : const Text("No Image Found");
+                },
+              ),
+            ),
+            ..._feedController.feed.map((element) => Center(
+              child: Container(
+                constraints: BoxConstraints(
+                  maxWidth: MediaQuery.of(context).size.width * 0.95,
+                  minWidth: 10,
+                ),
+                child: PostCard(
+                  post: element,
+                  onPressed: () => Get.back(result: {"result": element.toJson()}),
+                ),
+              ),
+            )).toList(),
+            /*Flexible(
+                child: ListView.builder(
+                  itemCount: _feedController.feed.length,
+                  itemBuilder: (context, index) {
+                    var post = _feedController.feed[index];
+                    return ;
+                  },
+                )),*/
+          ],
+        )),
+      )
+    );
+  }
+}
+
+/*
+SingleChildScrollView(
         child: Column(
           children: [
             Obx(() => Column(
@@ -36,21 +84,47 @@ class Feed extends StatelessWidget {
                 ))
           ],
         ),
-      ),
-    );
-  }
-}
+      )
+ */
 
 /*
-ListView.builder(
-                shrinkWrap: true,
+Obx(() => Column(
+            children: [
+              Container(
+                constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.95, minWidth: 10, minHeight: 10, maxHeight: MediaQuery.of(context).size.height * 0.1),
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: _feedController.categories.length,
+                  itemBuilder: (context, index) {
+                    var image = _feedController.categories[index].image;
+                    return image != null
+                        ? Image.asset(
+                            image,
+                            height: MediaQuery.of(context).size.height * 0.1,
+                          )
+                        : const Text("No Image Found");
+                  },
+                ),
+              ),
+              Flexible(
+                  child: ListView.builder(
                 itemCount: _feedController.feed.length,
                 itemBuilder: (context, index) {
                   var post = _feedController.feed[index];
-                  return PostCard(
-                    post: post,
-                    onPressed: () => Get.back(result: {"result": post.toJson()}),
+                  return Center(
+                    child: Container(
+                      constraints: BoxConstraints(
+                        maxWidth: MediaQuery.of(context).size.width * 0.95,
+                        minWidth: 10,
+                      ),
+                      child: PostCard(
+                        post: post,
+                        onPressed: () => Get.back(result: {"result": post.toJson()}),
+                      ),
+                    ),
                   );
                 },
-              )
+              )),
+            ],
+          )),
  */
