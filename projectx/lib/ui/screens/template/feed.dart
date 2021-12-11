@@ -22,7 +22,7 @@ class Feed extends StatelessWidget {
           backgroundColor: ColorsLight.appbar,
           // foregroundColor: Colors.transparent,
 
-          flexibleSpace: AnnotatedRegion<SystemUiOverlayStyle>(value: const SystemUiOverlayStyle().copyWith(statusBarColor: ColorsLight.appbar), child: Container()),
+          // flexibleSpace: AnnotatedRegion<SystemUiOverlayStyle>(value: const SystemUiOverlayStyle().copyWith(statusBarColor: ColorsLight.appbar), child: Container()),
           actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.search))],
           leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
           title: const Center(

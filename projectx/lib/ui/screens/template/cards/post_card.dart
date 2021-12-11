@@ -71,9 +71,9 @@ class PostCard extends StatelessWidget {
                   const SizedBox(
                     height: 8,
                   ),
-                  const Divider(
+                  Divider(
                     thickness: 1,
-                    color: Colors.grey,
+                    color: Colors.grey.withOpacity(0.5),
                   ),
                   Row(
                     children: [

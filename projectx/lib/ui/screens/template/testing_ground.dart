@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/factories/dialog_controller.dart';
 import 'package:projectx/main.dart';
-import 'package:projectx/ui/screens/bottom_nav.dart';
-import 'package:projectx/ui/screens/feed.dart';
+import 'package:projectx/ui/screens/template/bottom_nav.dart';
 import 'package:projectx/ui/screens/template/dialogs/dialog1.dart';
 import 'package:projectx/ui/screens/template/dialogs/dialog_login.dart';
 import 'package:projectx/ui/screens/template/dialogs/dialog_login_otp.dart';
+import 'package:projectx/ui/screens/template/feed.dart';
 import 'package:projectx/ui/screens/template/login_screen.dart';
+import 'package:projectx/ui/screens/template/profile_screen.dart';
+import 'package:projectx/ui/screens/template/settings.dart';
 
 import 'dialogs/dialog_login_alt.dart';
 
@@ -140,6 +142,27 @@ class UITestingGrounds extends StatelessWidget {
                       Get.changeThemeMode(currentThemeModeLight ? ThemeMode.light : ThemeMode.dark);
                     },
                     child: const Text("Switch Theme"),
+                  )),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                      child: OutlinedButton(
+                    onPressed: () async {
+                      Get.to(() => Settings());
+                    },
+                    child: const Text("Settings"),
+                  )),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                      child: OutlinedButton(
+                    onPressed: () async {
+                      Get.to(() => ProfileScreen());
+                    },
+                    child: const Text("Profile"),
                   )), /*
                   const SizedBox(
                     width: 10,
@@ -147,9 +170,9 @@ class UITestingGrounds extends StatelessWidget {
                   Expanded(
                       child: OutlinedButton(
                         onPressed: () async {
-                          dialogController.result.value = await Get.dialog(DialogLoginAlt(), useSafeArea: true);
+                          Get.to(()=>Settings());
                         },
-                        child: const Text("Dialog Alt"),
+                        child: const Text("Settings"),
                       )),*/
                 ],
               ),
