@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:projectx/controller/factories/dialog_controller.dart';
 import 'package:projectx/main.dart';
 import 'package:projectx/ui/screens/template/bottom_nav.dart';
+import 'package:projectx/ui/screens/template/checklist.dart';
 import 'package:projectx/ui/screens/template/dialogs/dialog1.dart';
 import 'package:projectx/ui/screens/template/dialogs/dialog_login.dart';
 import 'package:projectx/ui/screens/template/dialogs/dialog_login_otp.dart';
@@ -163,17 +164,17 @@ class UITestingGrounds extends StatelessWidget {
                       Get.to(() => ProfileScreen());
                     },
                     child: const Text("Profile"),
-                  )), /*
+                  )),
                   const SizedBox(
                     width: 10,
                   ),
                   Expanded(
                       child: OutlinedButton(
                         onPressed: () async {
-                          Get.to(()=>Settings());
+                          Get.to(()=>Checklist());
                         },
-                        child: const Text("Settings"),
-                      )),*/
+                        child: const Text("Checklist"),
+                      )),
                 ],
               ),
             ],

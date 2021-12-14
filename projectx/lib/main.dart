@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -62,15 +63,17 @@ bool currentThemeModeLight = true;
 
 class MyApp extends StatelessWidget {
   final DBController controllerDB;
+  StreamSubscription<ReceivedAction>? listen;
 
-  const MyApp(this.controllerDB, {Key? key}) : super(key: key);
+  MyApp(this.controllerDB, {Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    AwesomeNotifications().actionStream.listen((ReceivedAction receivedAction) {
+    listen?.cancel().then((value) => listen = AwesomeNotifications().actionStream.listen((ReceivedAction receivedAction) {
       log("notification ${receivedAction.buttonKeyPressed} ${receivedAction.groupKey} ${receivedAction.channelKey}");
-    });
+    }));
+
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: _lightTheme,
