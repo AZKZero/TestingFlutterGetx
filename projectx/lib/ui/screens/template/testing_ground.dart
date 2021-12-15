@@ -11,6 +11,7 @@ import 'package:projectx/ui/screens/template/feed.dart';
 import 'package:projectx/ui/screens/template/login_screen.dart';
 import 'package:projectx/ui/screens/template/profile_screen.dart';
 import 'package:projectx/ui/screens/template/settings.dart';
+import 'package:projectx/ui/screens/template/text_editor_screen.dart';
 
 import 'dialogs/dialog_login_alt.dart';
 
@@ -170,11 +171,32 @@ class UITestingGrounds extends StatelessWidget {
                   ),
                   Expanded(
                       child: OutlinedButton(
+                    onPressed: () async {
+                      Get.to(() => Checklist());
+                    },
+                    child: const Text("Checklist"),
+                  )),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                      child: OutlinedButton(
+                    onPressed: () async {
+                      Get.to(() => TextEditorScreen());
+                    },
+                    child: const Text("Editor"),
+                  )), /*
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                      child: OutlinedButton(
                         onPressed: () async {
                           Get.to(()=>Checklist());
                         },
                         child: const Text("Checklist"),
-                      )),
+                      )),*/
                 ],
               ),
             ],
