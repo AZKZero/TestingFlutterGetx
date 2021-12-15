@@ -1,12 +1,15 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_quill/flutter_quill.dart';
+import 'package:flutter_quill/flutter_quill.dart' as quill;
 
 import '../../components/alt_colors.dart';
 
 class TextEditorScreen extends StatelessWidget {
   TextEditorScreen({Key? key}) : super(key: key);
 
-  final QuillController _quillController = QuillController.basic();
+  final quill.QuillController _quillController = quill.QuillController.basic();
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +33,10 @@ class TextEditorScreen extends StatelessWidget {
                   ),
                   Positioned(
                     bottom: 10,
-                    left: MediaQuery.of(context).size.width * 0.05,
-                    right: MediaQuery.of(context).size.width * 0.05,
+                    left: MediaQuery.of(context).size.width * 0.01,
+                    right: MediaQuery.of(context).size.width * 0.01,
                     child: Container(
-                        height: MediaQuery.of(context).size.height * 0.6,
+                        height: MediaQuery.of(context).size.height * (MediaQuery.of(context).viewInsets.bottom == 0 ? 0.8 : 0.55),
                         constraints: BoxConstraints(
                           maxWidth: MediaQuery.of(context).size.width * 0.9,
                           minWidth: 10,
@@ -41,17 +44,41 @@ class TextEditorScreen extends StatelessWidget {
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Expanded(
-                              child: Card(
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                                child: Padding(
-                                  padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
-                                  child: SingleChildScrollView(reverse: true, child: QuillEditor.basic(controller: _quillController, readOnly: false)),
+                              child: Padding(
+                                padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.01),
+                                child: Card(
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
+                                    child: SingleChildScrollView(reverse: true, child: quill.QuillEditor.basic(controller: _quillController, readOnly: false)),
+                                  ),
                                 ),
                               ),
                             ),
-                            QuillToolbar.basic(controller: _quillController),
+                            ElevatedButton(
+                                style: ElevatedButton.styleFrom(primary: ColorsLight.appbar),
+                                onPressed: () {
+                                  log(jsonEncode(_quillController.document.toDelta().toJson()), name: "Alt-X");
+                                  log(jsonEncode(_quillController.document.toPlainText()), name: "Alt-X");
+                                },
+                                child: const Text("print")),
+                            if (MediaQuery.of(context).viewInsets.bottom != 0)
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: quill.QuillToolbar.basic(
+                                        controller: _quillController,
+                                        showAlignmentButtons: true,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                           ],
                         )),
                   ),
