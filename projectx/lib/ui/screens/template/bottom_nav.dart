@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/feed_controller.dart';
+import 'package:projectx/ui/components/alt_colors.dart';
 import 'package:projectx/ui/screens/template/dialogs/dialog_wrapper.dart';
 import 'package:projectx/ui/screens/template/pages/checklist_page.dart';
 import 'package:projectx/ui/screens/template/pages/feed_page.dart';
@@ -32,19 +33,30 @@ class BottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade50,
       floatingActionButton: FloatingActionButton(
+        backgroundColor: ColorsLight.appbar,
+        elevation: 0,
+        shape: const CircleBorder(side: BorderSide(color: Colors.white, width: 5)),
         onPressed: () async {
-          log(await Get.dialog(DialogWrapper(child: TextEditorPage()), useSafeArea: true));
+          Get.showSnackbar(GetSnackBar(
+            title: "Response",
+            message: await Get.dialog(DialogWrapper(child: TextEditorPage()), useSafeArea: true),
+            duration: const Duration(seconds: 1),
+          ));
+          // log();
         },
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: Obx(() => BottomNavigationBar(
+              backgroundColor: Colors.white,
               selectedFontSize: 12,
+              elevation: 8,
               unselectedFontSize: 12,
               showUnselectedLabels: true,
               type: BottomNavigationBarType.fixed,
-              selectedItemColor: Colors.green,
+              selectedItemColor: ColorsLight.appbar,
               unselectedItemColor: Colors.grey,
               currentIndex: currentIndex.value,
               onTap: (value) => currentIndex.value = value,

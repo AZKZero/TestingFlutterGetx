@@ -54,6 +54,9 @@ class ProfilePage extends StatelessWidget {
                   alignment: Alignment.topCenter,
                   fit: BoxFit.cover,
                 ),
+                top: 0,
+                left: 0,
+                right: 0,
               ),
               Positioned(
                 child: Image.network(
@@ -73,7 +76,8 @@ class ProfilePage extends StatelessWidget {
                     return Text(error.toString());
                   },
                 ),
-                top: height * 0.3 - width * 0.1,
+                bottom: 0,
+                // top: height * 0.3 - width * 0.1,
                 left: width * 0.05,
               )
             ],
