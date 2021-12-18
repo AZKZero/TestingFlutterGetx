@@ -42,7 +42,7 @@ class BottomNav extends StatelessWidget {
         onPressed: () async {
           Get.showSnackbar(GetSnackBar(
             title: "Response",
-            message: await Get.dialog(DialogWrapper(child: TextEditorPage()), useSafeArea: true),
+            message: await Get.dialog(DialogWrapper(child: TextEditorPage()), useSafeArea: true) ?? "Null",
             duration: const Duration(seconds: 1),
           ));
           // log();
