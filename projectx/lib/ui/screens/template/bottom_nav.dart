@@ -35,9 +35,10 @@ class BottomNav extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: ColorsLight.appbar,
+        backgroundColor: Colors.white,
+        foregroundColor: ColorsLight.appbar,
         elevation: 0,
-        shape: const CircleBorder(side: BorderSide(color: Colors.white, width: 5)),
+        shape: const CircleBorder(side: BorderSide(color: ColorsLight.appbar, width: 5)),
         onPressed: () async {
           Get.showSnackbar(GetSnackBar(
             title: "Response",
@@ -50,14 +51,14 @@ class BottomNav extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: Obx(() => BottomNavigationBar(
-              backgroundColor: Colors.white,
+              backgroundColor: ColorsLight.appbar,
               selectedFontSize: 12,
               elevation: 8,
               unselectedFontSize: 12,
-              showUnselectedLabels: true,
+              showUnselectedLabels: false,
               type: BottomNavigationBarType.fixed,
-              selectedItemColor: ColorsLight.appbar,
-              unselectedItemColor: Colors.grey,
+              selectedItemColor: Colors.white,
+              unselectedItemColor: Colors.grey.shade300,
               currentIndex: currentIndex.value,
               onTap: (value) => currentIndex.value = value,
               items: const [
