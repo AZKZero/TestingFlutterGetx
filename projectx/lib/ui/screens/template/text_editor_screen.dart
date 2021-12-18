@@ -10,6 +10,7 @@ class TextEditorScreen extends StatelessWidget {
   TextEditorScreen({Key? key}) : super(key: key);
 
   final quill.QuillController _quillController = quill.QuillController.basic();
+  final FocusNode _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -52,9 +53,18 @@ class TextEditorScreen extends StatelessWidget {
                                 child: Card(
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                                   child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
-                                    child: SingleChildScrollView(reverse: true, child: quill.QuillEditor.basic(controller: _quillController, readOnly: false)),
-                                  ),
+                                      padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
+                                      // child: quill.QuillEditor.basic(controller: _quillController, readOnly: false),
+                                      child: quill.QuillEditor(
+                                        controller: _quillController,
+                                        focusNode: _focusNode,
+                                        autoFocus: true,
+                                        padding: EdgeInsets.zero,
+                                        expands: false,
+                                        scrollable: true,
+                                        readOnly: false,
+                                        scrollController: ScrollController(),
+                                      )),
                                 ),
                               ),
                             ),
@@ -65,20 +75,20 @@ class TextEditorScreen extends StatelessWidget {
                                   log(jsonEncode(_quillController.document.toPlainText()), name: "Alt-X");
                                 },
                                 child: const Text("print")),
-                            if (MediaQuery.of(context).viewInsets.bottom != 0)
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: quill.QuillToolbar.basic(
-                                        controller: _quillController,
-                                        showAlignmentButtons: true,
-                                      ),
+                            // if (MediaQuery.of(context).viewInsets.bottom != 0)
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: quill.QuillToolbar.basic(
+                                      controller: _quillController,
+                                      showAlignmentButtons: true,
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
+                            ),
                           ],
                         )),
                   ),

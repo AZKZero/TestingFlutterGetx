@@ -25,7 +25,10 @@ class DialogLoginAlt extends StatelessWidget {
                   filled
                       ? ElevatedButton.icon(
                           onPressed: () => Get.back(result: {"result": "Facebook"}),
-                          icon: const ImageIcon(AssetImage("assets/images/icons/facebook.png"), color: Colors.white,),
+                          icon: const ImageIcon(
+                            AssetImage("assets/images/icons/facebook.png"),
+                            color: Colors.white,
+                          ),
                           label: const Text("Facebook Auth"),
                           style: ElevatedButton.styleFrom(
                             primary: const Color(0xFF3245B8),
@@ -45,7 +48,10 @@ class DialogLoginAlt extends StatelessWidget {
                   filled
                       ? ElevatedButton.icon(
                           onPressed: () => Get.back(result: {"result": "Google"}),
-                          icon: const ImageIcon(AssetImage("assets/images/icons/g.png"), color: Colors.white,),
+                          icon: const ImageIcon(
+                            AssetImage("assets/images/icons/g.png"),
+                            color: Colors.white,
+                          ),
                           label: const Text("Google Auth"),
                           style: ElevatedButton.styleFrom(
                             primary: const Color(0xFFD54546),
@@ -65,7 +71,10 @@ class DialogLoginAlt extends StatelessWidget {
                   filled
                       ? ElevatedButton.icon(
                           onPressed: () => Get.back(result: {"result": "Twitter????"}),
-                          icon: const ImageIcon(AssetImage("assets/images/icons/twitter.png"), color: Colors.white,),
+                          icon: const ImageIcon(
+                            AssetImage("assets/images/icons/twitter.png"),
+                            color: Colors.white,
+                          ),
                           label: const Text("Twitter Auth????"),
                           style: ElevatedButton.styleFrom(
                             primary: const Color(0xFF0091EA),

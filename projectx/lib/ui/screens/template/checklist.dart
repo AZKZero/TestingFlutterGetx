@@ -8,14 +8,13 @@ import 'package:projectx/ui/components/alt_colors.dart';
 import '../../../controller/feed_controller.dart';
 
 class Checklist extends StatelessWidget {
-  Checklist({Key? key}) : super(key: key){
+  Checklist({Key? key}) : super(key: key) {
     _feedController.loadFeed();
   }
 
   /*{
     x = (_formController.currentState?.value ?? {}).obs;
   }*/
-
 
   final FeedController _feedController = Get.find();
   final _formController = GlobalKey<FormBuilderState>();
@@ -79,20 +78,22 @@ class Checklist extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 SizedBox(
-                                  height: MediaQuery.of(context).size.height*0.3,
+                                  height: MediaQuery.of(context).size.height * 0.3,
                                   child: SingleChildScrollView(
                                     child: FormBuilder(
                                         key: _formController,
-                                        child: Column(
-                                          children: [
-                                            ..._feedController.users.map((user) =>  FormBuilderCheckbox(
-                                              name: user.username?? "x",
-                                              title: Text(user.username?? "x"),
-                                              initialValue: null,
-                                              tristate: true,
-                                            )).toList()
-                                          ],
-                                        )),
+                                        child: Obx(() => Column(
+                                              children: [
+                                                ..._feedController.users
+                                                    .map((user) => FormBuilderCheckbox(
+                                                          name: user.username ?? "x",
+                                                          title: Text(user.username ?? "x"),
+                                                          initialValue: null,
+                                                          tristate: true,
+                                                        ))
+                                                    .toList()
+                                              ],
+                                            ))),
                                   ),
                                 ),
                                 ElevatedButton(
