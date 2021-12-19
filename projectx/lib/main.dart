@@ -11,15 +11,15 @@ import 'package:projectx/controller/factories/task_controller.dart';
 import 'package:projectx/controller/feed_controller.dart';
 import 'package:projectx/controller/network_controller.dart';
 import 'package:projectx/controller/selection_controller.dart';
-import 'package:projectx/ui/components/tile_button.dart';
-import 'package:projectx/ui/screens/misc/testing_list.dart';
-import 'package:projectx/ui/screens/misc/testing_list_2.dart';
-import 'package:projectx/ui/screens/misc/testing_list_3.dart';
-import 'package:projectx/ui/screens/template/testing_ground.dart';
-import 'package:projectx/ui/screens/test/activity_main.dart';
+import 'package:projectx/ui/misc/alt_colors.dart';
+import 'package:projectx/ui/misc/tile_button.dart';
+import 'package:projectx/ui/misc/testing_list.dart';
+import 'package:projectx/ui/misc/testing_list_2.dart';
+import 'package:projectx/ui/misc/testing_list_3.dart';
+import 'package:projectx/ui/template/screens/testing_ground.dart';
+import 'package:projectx/ui/test/activity_main.dart';
 
 import 'controller/factories/task_controller.dart';
-import 'ui/components/alt_colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
