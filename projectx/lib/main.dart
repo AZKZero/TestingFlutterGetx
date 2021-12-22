@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -7,14 +8,16 @@ import 'package:projectx/controller/db_controller.dart';
 import 'package:projectx/controller/factories/blog_controller.dart';
 import 'package:projectx/controller/factories/dialog_controller.dart';
 import 'package:projectx/controller/factories/task_controller.dart';
+import 'package:projectx/controller/feed_controller.dart';
 import 'package:projectx/controller/network_controller.dart';
 import 'package:projectx/controller/selection_controller.dart';
-import 'package:projectx/ui/components/tile_button.dart';
-import 'package:projectx/ui/screens/misc/testing_list.dart';
-import 'package:projectx/ui/screens/misc/testing_list_2.dart';
-import 'package:projectx/ui/screens/misc/testing_list_3.dart';
-import 'package:projectx/ui/screens/template/testing_ground.dart';
-import 'package:projectx/ui/screens/test/activity_main.dart';
+import 'package:projectx/ui/misc/alt_colors.dart';
+import 'package:projectx/ui/misc/tile_button.dart';
+import 'package:projectx/ui/misc/testing_list.dart';
+import 'package:projectx/ui/misc/testing_list_2.dart';
+import 'package:projectx/ui/misc/testing_list_3.dart';
+import 'package:projectx/ui/template/screens/testing_ground.dart';
+import 'package:projectx/ui/test/activity_main.dart';
 
 import 'controller/factories/task_controller.dart';
 
@@ -48,27 +51,29 @@ ThemeData _darkTheme = ThemeData(
   primaryColor: Colors.amber,
   primaryColorDark: Colors.amber,
   primarySwatch: Colors.amber,
-  colorScheme: ColorScheme.fromSwatch().copyWith(primary:Colors.amber, brightness: Brightness.dark, surface: Colors.red),
+  colorScheme: ColorScheme.fromSwatch().copyWith(primary: Colors.amber, brightness: Brightness.dark, surface: Colors.red),
 );
 
 ThemeData _lightTheme = ThemeData(
   // brightness: Brightness.light,
-  colorScheme: ColorScheme.fromSwatch().copyWith(primary: Colors.blue, brightness: Brightness.light, secondary: Colors.green),
+  colorScheme: ColorScheme.fromSwatch().copyWith(primary: ColorsLight.linearGradientStart, brightness: Brightness.light, secondary: Colors.green),
 );
 
 bool currentThemeModeLight = true;
 
 class MyApp extends StatelessWidget {
   final DBController controllerDB;
+  StreamSubscription<ReceivedAction>? listen;
 
-  const MyApp(this.controllerDB, {Key? key}) : super(key: key);
+  MyApp(this.controllerDB, {Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    AwesomeNotifications().actionStream.listen((ReceivedAction receivedAction) {
-      log("notification ${receivedAction.buttonKeyPressed} ${receivedAction.groupKey} ${receivedAction.channelKey}");
-    });
+    listen?.cancel().then((value) => listen = AwesomeNotifications().actionStream.listen((ReceivedAction receivedAction) {
+          log("notification ${receivedAction.buttonKeyPressed} ${receivedAction.groupKey} ${receivedAction.channelKey}");
+        }));
+
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: _lightTheme,
@@ -78,6 +83,7 @@ class MyApp extends StatelessWidget {
             Get.put(controllerDB),
             Get.put(SelectionController()),
             Get.put(NetworkController()),
+            Get.put(FeedController()),
             Get.create<TaskController>(() => TaskController()),
             Get.create<BlogController>(() => BlogController()),
             Get.create<DialogController>(() => DialogController())
@@ -173,30 +179,6 @@ class NewHomePage extends StatelessWidget {
             child: Column(
               verticalDirection: VerticalDirection.down,
               children: [
-                Expanded(
-                    child: Column(
-                  verticalDirection: VerticalDirection.down,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(child: TileButton(controller: controller, buttonTitle: "QMS", buttonBack: Colors.lime)),
-                        Expanded(child: TileButton(controller: controller, buttonTitle: "Project", buttonBack: Colors.orangeAccent)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(child: TileButton(controller: controller, buttonTitle: "Form", buttonBack: Colors.blue)),
-                        Expanded(child: TileButton(controller: controller, buttonTitle: "Documents", buttonBack: Colors.amber)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(child: TileButton(controller: controller, buttonTitle: "Tickets", buttonBack: Colors.teal)),
-                        Expanded(child: TileButton(controller: controller, buttonTitle: "Assets", buttonBack: Colors.red)),
-                      ],
-                    ),
-                  ],
-                )),
                 // if (controllerT.requestResult.value)
                 Padding(
                   padding: const EdgeInsets.all(8.0),
