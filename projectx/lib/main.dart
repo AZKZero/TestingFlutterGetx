@@ -1,54 +1,93 @@
+import 'dart:async';
+import 'dart:developer';
+
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/db_controller.dart';
 import 'package:projectx/controller/factories/blog_controller.dart';
+import 'package:projectx/controller/factories/dialog_controller.dart';
 import 'package:projectx/controller/factories/task_controller.dart';
+import 'package:projectx/controller/feed_controller.dart';
 import 'package:projectx/controller/network_controller.dart';
 import 'package:projectx/controller/selection_controller.dart';
-import 'package:projectx/ui/components/tile_button.dart';
-import 'package:projectx/ui/screens/misc/testing_list.dart';
-import 'package:projectx/ui/screens/misc/testing_list_2.dart';
-import 'package:projectx/ui/screens/misc/testing_list_3.dart';
-import 'package:projectx/ui/screens/test/activity_main.dart';
+import 'package:projectx/ui/misc/alt_colors.dart';
+import 'package:projectx/ui/misc/tile_button.dart';
+import 'package:projectx/ui/misc/testing_list.dart';
+import 'package:projectx/ui/misc/testing_list_2.dart';
+import 'package:projectx/ui/misc/testing_list_3.dart';
+import 'package:projectx/ui/template/screens/testing_ground.dart';
+import 'package:projectx/ui/test/activity_main.dart';
 
 import 'controller/factories/task_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  AwesomeNotifications().initialize(
+      // set the icon to null if you want to use the default app icon
+      //   'resource://drawable/res_app_icon',
+      null,
+      [
+        NotificationChannel(
+            channelGroupKey: 'basic_channel_group',
+            channelKey: 'basic_channel',
+            channelName: 'Basic notifications',
+            channelDescription: 'Notification channel for basic tests',
+            defaultColor: const Color(0xFF9D50DD),
+            ledColor: Colors.white)
+      ],
+      // Channel groups are only visual and are not required
+      channelGroups: [NotificationChannelGroup(channelGroupkey: 'basic_channel_group', channelGroupName: 'Basic group')],
+      debug: true);
+
   final DBController controllerDB = DBController();
   await controllerDB.initializeDB();
   runApp(MyApp(controllerDB));
 }
 
+ThemeData _darkTheme = ThemeData(
+  // brightness: Brightness.dark,
+  primaryColor: Colors.amber,
+  primaryColorDark: Colors.amber,
+  primarySwatch: Colors.amber,
+  colorScheme: ColorScheme.fromSwatch().copyWith(primary: Colors.amber, brightness: Brightness.dark, surface: Colors.red),
+);
+
+ThemeData _lightTheme = ThemeData(
+  // brightness: Brightness.light,
+  colorScheme: ColorScheme.fromSwatch().copyWith(primary: ColorsLight.linearGradientStart, brightness: Brightness.light, secondary: Colors.green),
+);
+
+bool currentThemeModeLight = true;
+
 class MyApp extends StatelessWidget {
   final DBController controllerDB;
+  StreamSubscription<ReceivedAction>? listen;
 
-  const MyApp(this.controllerDB, {Key? key}) : super(key: key);
+  MyApp(this.controllerDB, {Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    listen?.cancel().then((value) => listen = AwesomeNotifications().actionStream.listen((ReceivedAction receivedAction) {
+          log("notification ${receivedAction.buttonKeyPressed} ${receivedAction.groupKey} ${receivedAction.channelKey}");
+        }));
+
     return GetMaterialApp(
       title: 'Flutter Demo',
+      theme: _lightTheme,
+      darkTheme: _darkTheme,
+      themeMode: ThemeMode.light,
       initialBinding: BindingsBuilder(() => {
             Get.put(controllerDB),
             Get.put(SelectionController()),
             Get.put(NetworkController()),
+            Get.put(FeedController()),
             Get.create<TaskController>(() => TaskController()),
-            Get.create<BlogController>(() => BlogController())
+            Get.create<BlogController>(() => BlogController()),
+            Get.create<DialogController>(() => DialogController())
           }),
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
       home: NewHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -106,9 +145,23 @@ class NewHomePage extends StatelessWidget {
                   child: const Text("DB List 1")),
               OutlinedButton(
                   onPressed: () {
-                    Get.to(ActivityMain());
+                    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+                      if (!isAllowed) {
+                        // This is just a basic example. For real apps, you must show some
+                        // friendly dialog box before call the request method.
+                        // This is very important to not harm the user experience
+                        AwesomeNotifications().requestPermissionToSendNotifications();
+                      } else {
+                        Get.to(ActivityMain());
+                      }
+                    });
                   },
                   child: const Text("Blog List 1")),
+              OutlinedButton(
+                  onPressed: () {
+                    Get.to(UITestingGrounds());
+                  },
+                  child: const Text("UI Testing ground"))
             ],
           ),
         ),
@@ -126,33 +179,9 @@ class NewHomePage extends StatelessWidget {
             child: Column(
               verticalDirection: VerticalDirection.down,
               children: [
-                Expanded(
-                    child: Column(
-                  verticalDirection: VerticalDirection.down,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(child: TileButton(controller: controller, buttonTitle: "QMS", buttonBack: Colors.lime)),
-                        Expanded(child: TileButton(controller: controller, buttonTitle: "Project", buttonBack: Colors.orangeAccent)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(child: TileButton(controller: controller, buttonTitle: "Form", buttonBack: Colors.blue)),
-                        Expanded(child: TileButton(controller: controller, buttonTitle: "Documents", buttonBack: Colors.amber)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(child: TileButton(controller: controller, buttonTitle: "Tickets", buttonBack: Colors.teal)),
-                        Expanded(child: TileButton(controller: controller, buttonTitle: "Assets", buttonBack: Colors.red)),
-                      ],
-                    ),
-                  ],
-                )),
                 // if (controllerT.requestResult.value)
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Text(
                     /*controllerT.requestResult.value ? */
                     controllerT.result.value?.toString() ?? "N/A" /* : "Failed"*/,
@@ -160,7 +189,7 @@ class NewHomePage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: SimpleTileButton(
                     buttonTitle: "TestRetrofit: Should Succeed",
                     onPressed: () => controllerT.getTask(),
@@ -168,7 +197,7 @@ class NewHomePage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: SimpleTileButton(
                     buttonTitle: "TestRetrofit: Should Fail",
                     onPressed: () => controllerT.getTask(true),
