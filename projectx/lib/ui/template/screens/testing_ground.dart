@@ -203,7 +203,7 @@ class UITestingGrounds extends StatelessWidget {
                     Expanded(
                         child: OutlinedButton(
                       onPressed: () async {
-                        Get.to(() => ImageGallery());
+                        dialogController.result.value = await Get.to(() => ImageGallery());
                       },
                       child: const Text("Image Gallery"),
                     )),

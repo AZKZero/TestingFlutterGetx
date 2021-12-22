@@ -29,50 +29,68 @@ class Feed extends StatelessWidget {
             child: Text("Feed"),
           ),
         ),
-        body: SingleChildScrollView(
-          child: Obx(() => Column(
-                children: [
-                  Container(
-                    constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.95, minWidth: 10, minHeight: 10, maxHeight: MediaQuery.of(context).size.height * 0.1),
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: _feedController.categories.length,
-                      itemBuilder: (context, index) {
-                        var image = _feedController.categories[index].image;
-                        return image != null
-                            ? Image.asset(
-                                image,
-                                height: MediaQuery.of(context).size.height * 0.1,
-                              )
-                            : const Text("No Image Found");
-                      },
-                    ),
+        body: Obx(() => Column(
+              children: [
+                Container(
+                  constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.95, minWidth: 10, minHeight: 10, maxHeight: MediaQuery.of(context).size.height * 0.1),
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: _feedController.categories.length,
+                    itemBuilder: (context, index) {
+                      var image = _feedController.categories[index].image;
+                      return image != null
+                          ? Image.asset(
+                              image,
+                              height: MediaQuery.of(context).size.height * 0.1,
+                            )
+                          : const Text("No Image Found");
+                    },
                   ),
-                  ..._feedController.feed
-                      .map((element) => Center(
-                            child: Container(
-                              constraints: BoxConstraints(
-                                maxWidth: MediaQuery.of(context).size.width * 0.95,
-                                minWidth: 10,
-                              ),
-                              child: PostCard(
-                                post: element,
-                                onPressed: () => Get.back(result: {"result": element.toJson()}),
-                              ),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: _feedController.feed.length,
+                    itemBuilder: (context, index) {
+                      var element = _feedController.feed[index];
+                      return Center(
+                        child: Container(
+                          constraints: BoxConstraints(
+                            maxWidth: MediaQuery.of(context).size.width * 0.95,
+                            minWidth: 10,
+                          ),
+                          child: PostCard(
+                            post: element,
+                            onPressed: () => Get.back(result: {"result": element.toJson()}),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                /*..._feedController.feed
+                    .map((element) => Center(
+                          child: Container(
+                            constraints: BoxConstraints(
+                              maxWidth: MediaQuery.of(context).size.width * 0.95,
+                              minWidth: 10,
                             ),
-                          ))
-                      .toList(),
-                  /*Flexible(
-                child: ListView.builder(
-                  itemCount: _feedController.feed.length,
-                  itemBuilder: (context, index) {
-                    var post = _feedController.feed[index];
-                    return ;
-                  },
-                )),*/
-                ],
-              )),
-        ));
+                            child: PostCard(
+                              post: element,
+                              onPressed: () => Get.back(result: {"result": element.toJson()}),
+                            ),
+                          ),
+                        ))
+                    .toList(),*/
+                /*Flexible(
+              child: ListView.builder(
+                itemCount: _feedController.feed.length,
+                itemBuilder: (context, index) {
+                  var post = _feedController.feed[index];
+                  return ;
+                },
+              )),*/
+              ],
+            )));
   }
 }
 

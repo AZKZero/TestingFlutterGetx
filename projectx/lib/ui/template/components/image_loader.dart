@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ImageLoaderWidget extends StatelessWidget {
-  const ImageLoaderWidget({Key? key, required this.height, required this.width, required this.child, required this.loadingProgress}) : super(key: key);
+  const ImageLoaderWidget({Key? key, this.height = 300, this.width = 300, required this.child, required this.loadingProgress}) : super(key: key);
 
   final ImageChunkEvent? loadingProgress;
   final double height, width;
