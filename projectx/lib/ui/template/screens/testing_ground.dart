@@ -143,10 +143,7 @@ class UITestingGrounds extends StatelessWidget {
                   children: [
                     Expanded(
                         child: OutlinedButton(
-                      onPressed: () async {
-                        currentThemeModeLight = !currentThemeModeLight;
-                        Get.changeThemeMode(currentThemeModeLight ? ThemeMode.light : ThemeMode.dark);
-                      },
+                      onPressed: () async => changeThemeMode(),
                       child: const Text("Switch Theme"),
                     )),
                     const SizedBox(

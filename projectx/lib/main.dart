@@ -18,6 +18,7 @@ import 'package:projectx/ui/misc/testing_list_2.dart';
 import 'package:projectx/ui/misc/testing_list_3.dart';
 import 'package:projectx/ui/template/screens/testing_ground.dart';
 import 'package:projectx/ui/test/activity_main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'controller/factories/task_controller.dart';
 
@@ -61,11 +62,34 @@ ThemeData _lightTheme = ThemeData(
 
 bool currentThemeModeLight = true;
 
+Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+_saveThemeStatus() async {
+  SharedPreferences pref = await _prefs;
+  pref.setBool('theme', currentThemeModeLight);
+}
+
+_getThemeStatus() async {
+  var _isLight = _prefs.then((SharedPreferences prefs) {
+    return prefs.getBool('theme') ?? true;
+  }).obs;
+  currentThemeModeLight = await _isLight.value;
+  Get.changeThemeMode(currentThemeModeLight ? ThemeMode.light : ThemeMode.dark);
+}
+
+changeThemeMode() {
+  currentThemeModeLight = !currentThemeModeLight;
+  Get.changeThemeMode(currentThemeModeLight ? ThemeMode.light : ThemeMode.dark);
+  _saveThemeStatus();
+}
+
 class MyApp extends StatelessWidget {
   final DBController controllerDB;
   StreamSubscription<ReceivedAction>? listen;
 
-  MyApp(this.controllerDB, {Key? key}) : super(key: key);
+  MyApp(this.controllerDB, {Key? key}) : super(key: key) {
+    _getThemeStatus();
+  }
 
   // This widget is the root of your application.
   @override
