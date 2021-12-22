@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/feed_controller.dart';
+import 'package:projectx/main.dart';
 import 'package:projectx/ui/misc/alt_colors.dart';
 import 'package:projectx/ui/template/dialogs/dialog_wrapper.dart';
 import 'package:projectx/ui/template/pages/checklist_page.dart';
@@ -36,12 +37,12 @@ class BottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade50,
+      backgroundColor: currentThemeModeLight ? Colors.grey.shade50 : ColorsDark.greyBlack,
       floatingActionButton: MediaQuery.of(context).viewInsets.bottom != 0
           ? null
           : FloatingActionButton(
-              backgroundColor: Colors.white,
-              foregroundColor: ColorsLight.appbar,
+              backgroundColor: currentThemeModeLight ? Colors.white : ColorsDark.appbar,
+              foregroundColor: currentThemeModeLight ? ColorsLight.appbar : Colors.white,
               elevation: 0,
               shape: const CircleBorder(side: BorderSide(color: ColorsLight.appbar, width: 5)),
               onPressed: () async {

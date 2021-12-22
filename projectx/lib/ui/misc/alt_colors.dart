@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 class AltColors {
   static const colors = Colors;
 
-  static const light=ColorsLight;
-
+  static const light = ColorsLight;
 }
 
 class ColorsLight {
-  static const linearGradientStart =  Color(0xFFFD7292);
-  static const linearGradientEnd =  Color(0xFFFD5E2C);
-  static const appbar =  Color(0xFFFE654F);
-
+  static const linearGradientStart = Color(0xFFFD7292);
+  static const linearGradientEnd = Color(0xFFFD5E2C);
+  static const appbar = Color(0xFFFE654F);
 }
 
+class ColorsDark {
+  static const greyBlack = Color(0xFF555555);
+  static const appbar = Color(0xFFFF6262);
+}

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/feed_controller.dart';
+import 'package:projectx/main.dart';
 import 'package:projectx/ui/misc/alt_colors.dart';
 
 class ChecklistPage extends StatelessWidget {
@@ -72,6 +73,7 @@ class ChecklistPage extends StatelessWidget {
                                           children: [
                                             ..._feedController.users
                                                 .map((user) => FormBuilderCheckbox(
+                                                      activeColor: currentThemeModeLight ? ColorsLight.appbar : Colors.green,
                                                       name: user.username ?? "x",
                                                       title: Text(user.username ?? "x"),
                                                       initialValue: checkedState[user.username],

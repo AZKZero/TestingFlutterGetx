@@ -51,7 +51,7 @@ ThemeData _darkTheme = ThemeData(
   primaryColor: Colors.amber,
   primaryColorDark: Colors.amber,
   primarySwatch: Colors.amber,
-  colorScheme: ColorScheme.fromSwatch().copyWith(primary: Colors.amber, brightness: Brightness.dark, surface: Colors.red),
+  colorScheme: ColorScheme.fromSwatch().copyWith(primary: Colors.amber, brightness: Brightness.dark, secondary: Colors.red, onSurface: Colors.white, surface: ColorsDark.appbar),
 );
 
 ThemeData _lightTheme = ThemeData(
