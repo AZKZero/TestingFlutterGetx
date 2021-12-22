@@ -11,15 +11,15 @@ import 'package:projectx/controller/factories/task_controller.dart';
 import 'package:projectx/controller/feed_controller.dart';
 import 'package:projectx/controller/network_controller.dart';
 import 'package:projectx/controller/selection_controller.dart';
-import 'package:projectx/ui/components/tile_button.dart';
-import 'package:projectx/ui/screens/misc/testing_list.dart';
-import 'package:projectx/ui/screens/misc/testing_list_2.dart';
-import 'package:projectx/ui/screens/misc/testing_list_3.dart';
-import 'package:projectx/ui/screens/template/testing_ground.dart';
-import 'package:projectx/ui/screens/test/activity_main.dart';
+import 'package:projectx/ui/misc/alt_colors.dart';
+import 'package:projectx/ui/misc/tile_button.dart';
+import 'package:projectx/ui/misc/testing_list.dart';
+import 'package:projectx/ui/misc/testing_list_2.dart';
+import 'package:projectx/ui/misc/testing_list_3.dart';
+import 'package:projectx/ui/template/screens/testing_ground.dart';
+import 'package:projectx/ui/test/activity_main.dart';
 
 import 'controller/factories/task_controller.dart';
-import 'ui/components/alt_colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,7 +51,7 @@ ThemeData _darkTheme = ThemeData(
   primaryColor: Colors.amber,
   primaryColorDark: Colors.amber,
   primarySwatch: Colors.amber,
-  colorScheme: ColorScheme.fromSwatch().copyWith(primary:Colors.amber, brightness: Brightness.dark, surface: Colors.red),
+  colorScheme: ColorScheme.fromSwatch().copyWith(primary: Colors.amber, brightness: Brightness.dark, surface: Colors.red),
 );
 
 ThemeData _lightTheme = ThemeData(
@@ -71,8 +71,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     listen?.cancel().then((value) => listen = AwesomeNotifications().actionStream.listen((ReceivedAction receivedAction) {
-      log("notification ${receivedAction.buttonKeyPressed} ${receivedAction.groupKey} ${receivedAction.channelKey}");
-    }));
+          log("notification ${receivedAction.buttonKeyPressed} ${receivedAction.groupKey} ${receivedAction.channelKey}");
+        }));
 
     return GetMaterialApp(
       title: 'Flutter Demo',
@@ -179,30 +179,6 @@ class NewHomePage extends StatelessWidget {
             child: Column(
               verticalDirection: VerticalDirection.down,
               children: [
-                Expanded(
-                    child: Column(
-                  verticalDirection: VerticalDirection.down,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(child: TileButton(controller: controller, buttonTitle: "QMS", buttonBack: Colors.lime)),
-                        Expanded(child: TileButton(controller: controller, buttonTitle: "Project", buttonBack: Colors.orangeAccent)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(child: TileButton(controller: controller, buttonTitle: "Form", buttonBack: Colors.blue)),
-                        Expanded(child: TileButton(controller: controller, buttonTitle: "Documents", buttonBack: Colors.amber)),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(child: TileButton(controller: controller, buttonTitle: "Tickets", buttonBack: Colors.teal)),
-                        Expanded(child: TileButton(controller: controller, buttonTitle: "Assets", buttonBack: Colors.red)),
-                      ],
-                    ),
-                  ],
-                )),
                 // if (controllerT.requestResult.value)
                 Padding(
                   padding: const EdgeInsets.all(8.0),
