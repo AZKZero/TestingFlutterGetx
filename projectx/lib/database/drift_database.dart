@@ -38,9 +38,7 @@ class AltDriftDatabase extends _$AltDriftDatabase {
   MigrationStrategy get migration => MigrationStrategy(onCreate: (Migrator m) {
         return m.createAll();
       }, onUpgrade: (Migrator m, int from, int to) async {
-        await Future.wait([m.deleteTable("blogs"),
-        m.deleteTable("author_table"),
-        m.deleteTable("log_table")]);
+        await Future.wait([m.deleteTable("blogs"), m.deleteTable("author_table"), m.deleteTable("log_table")]);
       });
 }
 
