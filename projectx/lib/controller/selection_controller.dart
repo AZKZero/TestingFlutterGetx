@@ -17,7 +17,7 @@ class SelectionController extends GetxController {
     try {
       currentText.value = value;
       scheduleUpdate.value = true;
-      await controller.logDao.insertLog(Log(buttonClicked: currentText.value, dateButtonClickedOn: formatDate(DateTime.now(), [HH, '.', nn, ": :", dd, "/", M, "/", yyyy])));
+      await controller.logDao?.insertLog(Log(buttonClicked: currentText.value, dateButtonClickedOn: formatDate(DateTime.now(), [HH, '.', nn, ": :", dd, "/", M, "/", yyyy])));
       scheduleUpdate.value = false;
     } catch (e) {
       print("ERROR");
@@ -27,7 +27,10 @@ class SelectionController extends GetxController {
 
   void deleteAllLogs({String? id}) async {
     scheduleUpdate.value = true;
-    await controller.logDao.deleteAllLogs();
+    if (controller.database == null) {
+      await controller.initializeDB();
+    }
+    await controller.logDao?.deleteAllLogs();
     scheduleUpdate.value = false;
     // if (id != null) update(List.generate(1, (index) => id), true);
   }

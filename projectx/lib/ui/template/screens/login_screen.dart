@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:projectx/controller/user_controller.dart';
+import 'package:projectx/database/models/server/user.dart';
 import 'package:projectx/ui/misc/alt_colors.dart';
+import 'package:projectx/ui/template/screens/bottom_nav.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key) {
@@ -17,6 +20,8 @@ class LoginScreen extends StatelessWidget {
   var passwordGiven = false.obs;
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
+
+  final UserController _userController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +57,7 @@ class LoginScreen extends StatelessWidget {
                             height: MediaQuery.of(context).size.height * 0.15,
                           ),
                           TextFormField(
-                            // autofocus: true,
+                            autofocus: true,
                             controller: username,
                             decoration: const InputDecoration(
                                 enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Color(0x44AAAAAA))), prefixIcon: Icon(Icons.account_circle_outlined), counterText: null),
@@ -63,7 +68,6 @@ class LoginScreen extends StatelessWidget {
                           TextFormField(
                             obscureText: true,
                             controller: password,
-                            autofocus: true,
                             decoration: const InputDecoration(
                               enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Color(0x44AAAAAA))),
                               // enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color:Color(0xFFAAAAAA))),
@@ -77,10 +81,11 @@ class LoginScreen extends StatelessWidget {
                           Row(
                             children: [
                               Expanded(
-                                child: Obx(() => ElevatedButton(
-                                      onPressed: userNameGiven.value && passwordGiven.value ? () => Get.back(result: {"username": username.text, "password": password.text}) : null,
-                                      child: const Text("Close"),
-                                    )),
+                                child: /*Obx(() =>*/ ElevatedButton(
+                                  // onPressed: userNameGiven.value && passwordGiven.value ? () => Get.back(result: {"username": username.text, "password": password.text}) : null,
+                                  onPressed: () => _userController.saveUser(true, User(avatar: "https://i.pravatar.cc/250", username: username.text)),
+                                  child: const Text("Close"),
+                                ) /*)*/,
                               ),
                             ],
                           ),

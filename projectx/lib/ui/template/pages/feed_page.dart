@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/feed_controller.dart';
+import 'package:projectx/controller/user_controller.dart';
 import 'package:projectx/database/models/server/post.dart';
 import 'package:projectx/ui/misc/alt_colors.dart';
 import 'package:projectx/ui/template/components/cards/post_card.dart';
@@ -12,6 +13,7 @@ class FeedPage extends StatelessWidget {
   }
 
   final FeedController _feedController = Get.find();
+  final UserController _userController = Get.find();
 
   final FocusNode _textFocusNode = FocusNode();
 
@@ -79,6 +81,7 @@ class FeedPage extends StatelessWidget {
                     ),
                     child: PostCard(
                       post: element,
+                      highlight: element.username == _userController.user.value?.username,
                       onPressed: () => Get.back(result: {"result": element.toJson()}),
                     ),
                   ),

@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:projectx/database/models/server/post.dart';
 
 class PostCard extends StatelessWidget {
-  PostCard({Key? key, required this.post, required this.onPressed}) : super(key: key);
+  PostCard({Key? key, required this.post, required this.onPressed, this.highlight = false}) : super(key: key);
 
   Post post;
 
   VoidCallback onPressed;
+
+  bool highlight;
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +17,7 @@ class PostCard extends StatelessWidget {
       padding: const EdgeInsets.all(5),
       child: Container(
         decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              blurRadius: 8,
-              spreadRadius: 0.0,
-              offset: const Offset(0,4)
-            )
-          ],
+          boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.2), blurRadius: 8, spreadRadius: 0.0, offset: const Offset(0, 4))],
         ),
         child: Card(
           elevation: 0,
@@ -57,7 +52,14 @@ class PostCard extends StatelessWidget {
                           size: 10.0,
                         ),
                       ),
-                      Container(alignment: Alignment.centerLeft, padding: const EdgeInsets.all(8.0), height: 46, child: Text(post.username ?? "")),
+                      Container(
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.all(8.0),
+                          height: 46,
+                          child: Text(
+                            post.username ?? "",
+                            style: TextStyle(color: highlight ? Colors.green : null),
+                          )),
                     ],
                   ),
                   const SizedBox(

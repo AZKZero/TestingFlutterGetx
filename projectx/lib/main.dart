@@ -11,13 +11,16 @@ import 'package:projectx/controller/factories/task_controller.dart';
 import 'package:projectx/controller/feed_controller.dart';
 import 'package:projectx/controller/network_controller.dart';
 import 'package:projectx/controller/selection_controller.dart';
+import 'package:projectx/controller/user_controller.dart';
 import 'package:projectx/ui/misc/alt_colors.dart';
-import 'package:projectx/ui/misc/tile_button.dart';
 import 'package:projectx/ui/misc/testing_list.dart';
 import 'package:projectx/ui/misc/testing_list_2.dart';
 import 'package:projectx/ui/misc/testing_list_3.dart';
+import 'package:projectx/ui/misc/tile_button.dart';
+import 'package:projectx/ui/template/screens/landing_page.dart';
 import 'package:projectx/ui/template/screens/testing_ground.dart';
 import 'package:projectx/ui/test/activity_main.dart';
+import 'package:projectx/utils/bindings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'controller/factories/task_controller.dart';
@@ -41,10 +44,7 @@ void main() async {
       // Channel groups are only visual and are not required
       channelGroups: [NotificationChannelGroup(channelGroupkey: 'basic_channel_group', channelGroupName: 'Basic group')],
       debug: true);
-
-  final DBController controllerDB = DBController();
-  await controllerDB.initializeDB();
-  runApp(MyApp(controllerDB));
+  runApp(MyApp());
 }
 
 ThemeData _darkTheme = ThemeData(
@@ -60,35 +60,37 @@ ThemeData _lightTheme = ThemeData(
   colorScheme: ColorScheme.fromSwatch().copyWith(primary: ColorsLight.linearGradientStart, brightness: Brightness.light, secondary: Colors.green),
 );
 
-bool currentThemeModeLight = true;
+RxBool currentThemeModeLight = true.obs;
 
 Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
 _saveThemeStatus() async {
   SharedPreferences pref = await _prefs;
-  pref.setBool('theme', currentThemeModeLight);
+  pref.setBool('theme', currentThemeModeLight.value);
 }
 
 _getThemeStatus() async {
-  var _isLight = _prefs.then((SharedPreferences prefs) {
+  currentThemeModeLight.value = await _prefs.then((SharedPreferences prefs) {
     return prefs.getBool('theme') ?? true;
-  }).obs;
-  currentThemeModeLight = await _isLight.value;
-  Get.changeThemeMode(currentThemeModeLight ? ThemeMode.light : ThemeMode.dark);
+  });
+  Get.changeThemeMode(currentThemeModeLight.value ? ThemeMode.light : ThemeMode.dark);
 }
 
 changeThemeMode() {
-  currentThemeModeLight = !currentThemeModeLight;
-  Get.changeThemeMode(currentThemeModeLight ? ThemeMode.light : ThemeMode.dark);
+  currentThemeModeLight.value = !currentThemeModeLight.value;
+  Get.changeThemeMode(currentThemeModeLight.value ? ThemeMode.light : ThemeMode.dark);
   _saveThemeStatus();
 }
 
 class MyApp extends StatelessWidget {
-  final DBController controllerDB;
+  late DBController controllerDB;
   StreamSubscription<ReceivedAction>? listen;
 
-  MyApp(this.controllerDB, {Key? key}) : super(key: key) {
+  MyApp({Key? key}) : super(key: key) {
     _getThemeStatus();
+
+    /*controllerDB = DBController();
+    controllerDB.initializeDB();*/
   }
 
   // This widget is the root of your application.
@@ -98,21 +100,17 @@ class MyApp extends StatelessWidget {
           log("notification ${receivedAction.buttonKeyPressed} ${receivedAction.groupKey} ${receivedAction.channelKey}");
         }));
 
+    var bindings = AppBindings();
+
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: _lightTheme,
       darkTheme: _darkTheme,
       themeMode: ThemeMode.light,
-      initialBinding: BindingsBuilder(() => {
-            Get.put(controllerDB),
-            Get.put(SelectionController()),
-            Get.put(NetworkController()),
-            Get.put(FeedController()),
-            Get.create<TaskController>(() => TaskController()),
-            Get.create<BlogController>(() => BlogController()),
-            Get.create<DialogController>(() => DialogController())
-          }),
-      home: NewHomePage(title: 'Flutter Demo Home Page'),
+      initialBinding: bindings,
+      // home: NewHomePage(title: 'Flutter Demo Home Page'),
+      // home: LandingScreen(),
+      getPages: [GetPage(name: '/', page: () => LandingScreen(), binding: bindings)],
     );
   }
 }

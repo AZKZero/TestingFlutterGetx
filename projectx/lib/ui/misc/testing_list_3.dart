@@ -15,7 +15,7 @@ class TestingDBList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Stream<List<Log>>? allLogsAsStream = controllerX.logDao.getAllLogsAsStream();
+    Stream<List<Log>>? allLogsAsStream = controllerX.logDao?.getAllLogsAsStream();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Testing Database"),

@@ -38,7 +38,7 @@ class ActivityMain extends StatelessWidget {
                       Positioned.fill(
                         child: StreamBuilder<List<BlogAuthor?>?>(
                           initialData: const [],
-                          stream: blogController.controllerDB.blogDao.getBlogAuthors(),
+                          stream: blogController.controllerDB.blogDao?.getBlogAuthors(),
                           builder: (context, snapshot) {
                             AwesomeNotifications().createNotification(
                                 content: NotificationContent(id: 10, channelKey: 'basic_channel', title: 'Stream Received', body: 'Streamed?'),

@@ -1,6 +1,5 @@
 import 'package:drift/drift.dart';
 import 'package:projectx/database/drift_database.dart';
-import 'package:projectx/database/list_converter.dart';
 
 // part 'tables.g.dart';
 
@@ -39,5 +38,29 @@ class LogTable extends Table {
   Column<String?> get buttonClicked => text().named("button_clicked").nullable()();
 
   Column<String?> get dateButtonClickedOn => text().named("date_button_clicked_on").nullable()();
+}
 
+@DataClassName("PostInternal")
+class PostTable extends Table {
+  Column<int?> get id => integer().autoIncrement().nullable()();
+
+  Column<String?> get username => text().nullable()();
+
+  Column<String?> get description => text().nullable()();
+
+  Column<String?> get avatar => text().nullable()();
+
+  Column<int?> get likes => integer().nullable()();
+
+  Column<bool?> get isLiked => boolean().named("is_liked").nullable()();
+
+  Column<int?> get comments => integer().nullable()();
+}
+
+class Users extends Table {
+  get id => integer().autoIncrement().nullable();
+
+  get username => text().nullable()();
+
+  get avatar => text().nullable()();
 }

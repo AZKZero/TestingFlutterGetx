@@ -19,7 +19,7 @@ class BlogController extends GetxController {
 
   Future<void> getBlogs() async {
     try {
-      var blogCount = await controllerDB.blogDao.getBlogsCount().getSingle();
+      var blogCount = await controllerDB.blogDao?.getBlogsCount().getSingle();
       // var allblogs = await controllerDB.blogDao.getBlogs();
       log("$blogCount $currentTime");
 
@@ -34,7 +34,7 @@ class BlogController extends GetxController {
         log("${response.data}");
 
         if (response.data.blogs != null) {
-          await controllerDB.blogDao.insertBlogAuthorV2(response.data.blogs!);
+          await controllerDB.blogDao?.insertBlogAuthorV2(response.data.blogs!);
         }
 
         requestInFlight.value = false;

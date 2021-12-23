@@ -2,12 +2,16 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:projectx/controller/db_controller.dart';
+import 'package:projectx/database/drift_database.dart';
 import 'package:projectx/database/models/server/category.dart';
 import 'package:projectx/database/models/server/post.dart';
 
 import '../database/models/server/user.dart';
 
 class FeedController extends GetxController {
+  final DBController dbController = Get.find();
+
   // ignore: unnecessary_cast
   RxList<Post> feed = List<Post>.empty().obs;
 
@@ -25,9 +29,18 @@ class FeedController extends GetxController {
     users.value = (json.decode(await rootBundle.loadString("assets/jsons/users/users.json")) as List<dynamic>).map((e) => User.fromJson(e as Map<String, dynamic>)).toList();
 
     photos.value = (json.decode(await rootBundle.loadString("assets/jsons/photos/photos.json")) as List<dynamic>).map((e) => e as String).toList();
+  }
 
-    // feed.value = PostList.fromJson(json.decode(await rootBundle.loadString("assets/jsons/posts/posts.json")));
-    // categories.value = Categories.fromJson(json.decode(await rootBundle.loadString("assets/jsons/categories/categories.json")));
-    // users.value = Users.fromJson(json.decode(await rootBundle.loadString("assets/jsons/users/users.json")));
+  Stream<List<PostInternal>>? getFeed() {
+    checkAndSeedFeed();
+    return dbController.postDao?.getPosts().watch();
+  }
+
+  checkAndSeedFeed() async {
+    int postCount = await dbController.postDao?.getPostCount().getSingle() ?? 0;
+    if (postCount == 0) {
+      var postList = (json.decode(await rootBundle.loadString("assets/jsons/posts/posts.json")) as List<dynamic>).map((e) => Post.fromJson(e as Map<String, dynamic>)).toList();
+      await dbController.postDao?.savePosts(postList);
+    }
   }
 }

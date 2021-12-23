@@ -2,14 +2,16 @@ import 'package:get/get.dart';
 import 'package:projectx/database/drift_database.dart';
 import 'package:projectx/database/provider/alt_blog_dao.dart';
 import 'package:projectx/database/provider/alt_log_dao.dart';
+import 'package:projectx/database/provider/alt_post_dao.dart';
 
 class DBController extends GetxController {
   // late final ExtensionFloorDatabase database;
   // late final LogDao logDao;
   // late final BlogDao blogDao;
-  late final AltBlogDao blogDao;
-  late final AltLogDao logDao;
-  late final AltDriftDatabase database;
+  AltBlogDao? blogDao;
+  AltLogDao? logDao;
+  AltDriftDatabase? database;
+  AltPostDao? postDao;
 
   Future<void> initializeDB() async {
     /*database = await $FloorExtensionFloorDatabase.databaseBuilder('app_database.db').addMigrations([
@@ -22,7 +24,8 @@ class DBController extends GetxController {
     logDao = database.logDao;
     blogDao = database.blogDao;*/
     database = AltDriftDatabase();
-    blogDao = database.altBlogDao;
-    logDao = database.altLogDao;
+    blogDao = database?.altBlogDao;
+    logDao = database?.altLogDao;
+    postDao = database?.altPostDao;
   }
 }

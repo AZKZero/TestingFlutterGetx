@@ -8,6 +8,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:projectx/database/provider/alt_blog_dao.dart';
 import 'package:projectx/database/provider/alt_log_dao.dart';
+import 'package:projectx/database/provider/alt_post_dao.dart';
 import 'package:projectx/database/structures/tables.dart';
 
 part 'drift_database.g.dart';
@@ -23,7 +24,7 @@ LazyDatabase _openConnection() {
   });
 }
 
-@DriftDatabase(tables: [Blogs, AuthorTable, LogTable], daos: [AltBlogDao, AltLogDao])
+@DriftDatabase(tables: [Blogs, AuthorTable, LogTable, PostTable], daos: [AltBlogDao, AltLogDao, AltPostDao])
 class AltDriftDatabase extends _$AltDriftDatabase {
   // we tell the database where to store the data with this constructor
   AltDriftDatabase() : super(_openConnection());
@@ -31,13 +32,15 @@ class AltDriftDatabase extends _$AltDriftDatabase {
   // you should bump this number whenever you change or add a table definition. Migrations
   // are covered later in this readme.
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(onCreate: (Migrator m) {
         return m.createAll();
       }, onUpgrade: (Migrator m, int from, int to) async {
-        await Future.wait([m.deleteTable("blogs")]);
+        await Future.wait([m.deleteTable("blogs"),
+        m.deleteTable("author_table"),
+        m.deleteTable("log_table")]);
       });
 }
 

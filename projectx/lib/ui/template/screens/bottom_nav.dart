@@ -36,27 +36,27 @@ class BottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: currentThemeModeLight ? Colors.grey.shade50 : ColorsDark.greyBlack,
-      floatingActionButton: MediaQuery.of(context).viewInsets.bottom != 0
-          ? null
-          : FloatingActionButton(
-              backgroundColor: currentThemeModeLight ? Colors.white : ColorsDark.appbar,
-              foregroundColor: currentThemeModeLight ? ColorsLight.appbar : Colors.white,
-              elevation: 0,
-              shape: const CircleBorder(side: BorderSide(color: ColorsLight.appbar, width: 5)),
-              onPressed: () async {
-                Get.showSnackbar(GetSnackBar(
-                  title: "Response",
-                  message: await Get.dialog(DialogWrapper(child: TextEditorPage()), useSafeArea: true) ?? "Null",
-                  duration: const Duration(seconds: 1),
-                ));
-                // log();
-              },
-              child: const Icon(Icons.add),
-            ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: Obx(() => BottomAppBar(
+    return Obx(() => Scaffold(
+          backgroundColor: currentThemeModeLight.value ? Colors.grey.shade50 : ColorsDark.greyBlack,
+          floatingActionButton: MediaQuery.of(context).viewInsets.bottom != 0
+              ? null
+              : FloatingActionButton(
+                  backgroundColor: currentThemeModeLight.value ? Colors.white : ColorsDark.appbar,
+                  foregroundColor: currentThemeModeLight.value ? ColorsLight.appbar : Colors.white,
+                  elevation: 0,
+                  shape: const CircleBorder(side: BorderSide(color: ColorsLight.appbar, width: 5)),
+                  onPressed: () async {
+                    Get.showSnackbar(GetSnackBar(
+                      title: "Response",
+                      message: await Get.dialog(DialogWrapper(child: TextEditorPage()), useSafeArea: true) ?? "Null",
+                      duration: const Duration(seconds: 1),
+                    ));
+                    // log();
+                  },
+                  child: const Icon(Icons.add),
+                ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          bottomNavigationBar: BottomAppBar(
             shape: const CircularNotchedRectangle(),
             color: ColorsLight.appbar,
             elevation: 8,
@@ -136,11 +136,11 @@ class BottomNav extends StatelessWidget {
                 ),
               ],
             ),
-          )),
-      body: SafeArea(
-        child: Obx(() => PageStorage(bucket: _bucket, child: _children[currentIndex.value])),
-      ),
-    );
+          ),
+          body: SafeArea(
+            child: PageStorage(bucket: _bucket, child: _children[currentIndex.value]),
+          ),
+        ));
   }
 }
 
