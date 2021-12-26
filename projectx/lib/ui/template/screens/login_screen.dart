@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/user_controller.dart';
 import 'package:projectx/database/models/server/user.dart';
-import 'package:projectx/ui/misc/alt_colors.dart';
+import 'package:projectx/ui/styles/alt_colors.dart';
 import 'package:projectx/ui/template/screens/bottom_nav.dart';
 
 class LoginScreen extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projectx/ui/misc/alt_colors.dart';
+import 'package:projectx/ui/styles/alt_colors.dart';
 
 class CardStyle1 extends StatelessWidget {
   const CardStyle1({Key? key, required this.headerText, required this.content}) : super(key: key);

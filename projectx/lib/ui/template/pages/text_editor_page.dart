@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:get/get.dart';
-import 'package:projectx/ui/misc/alt_colors.dart';
+import 'package:projectx/ui/styles/alt_colors.dart';
 
 class TextEditorPage extends StatelessWidget {
   TextEditorPage({Key? key, this.oldData}) : super(key: key) {

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/feed_controller.dart';
-import 'package:projectx/ui/misc/alt_colors.dart';
+import 'package:projectx/ui/styles/alt_colors.dart';
 import 'package:projectx/ui/template/components/cards/post_card.dart';
 
 class Feed extends StatelessWidget {

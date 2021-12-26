@@ -5,7 +5,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/feed_controller.dart';
 import 'package:projectx/main.dart';
-import 'package:projectx/ui/misc/alt_colors.dart';
+import 'package:projectx/ui/styles/alt_colors.dart';
 
 class ChecklistPage extends StatelessWidget {
   ChecklistPage({Key? key}) : super(key: key);

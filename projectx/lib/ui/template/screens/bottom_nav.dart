@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 import 'package:projectx/controller/feed_controller.dart';
 import 'package:projectx/database/drift_database.dart';
 import 'package:projectx/main.dart';
-import 'package:projectx/ui/misc/alt_colors.dart';
+import 'package:projectx/ui/styles/alt_colors.dart';
+import 'package:projectx/ui/template/components/buttons/underlined_expanding_selector_button.dart';
 import 'package:projectx/ui/template/dialogs/dialog_wrapper.dart';
 import 'package:projectx/ui/template/pages/checklist_page.dart';
 import 'package:projectx/ui/template/pages/feed_page.dart';
@@ -34,116 +35,90 @@ class BottomNav extends StatelessWidget {
 
   late final _children;
 
-  final selectedItemColor = Colors.white;
-  final unselectedItemColor = Colors.grey.shade300;
+  // get selectedItemColor => AltColors.appbarX2;
+  //
+  // get unselectedItemColor => Colors.grey.shade300;
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Scaffold(
-          backgroundColor: currentThemeModeLight.value ? Colors.grey.shade50 : ColorsDark.greyBlack,
-          floatingActionButton: MediaQuery.of(context).viewInsets.bottom != 0
-              ? null
-              : FloatingActionButton(
-                  backgroundColor: currentThemeModeLight.value ? Colors.white : ColorsDark.appbar,
-                  foregroundColor: currentThemeModeLight.value ? ColorsLight.appbar : Colors.white,
-                  elevation: 0,
-                  shape: const CircleBorder(side: BorderSide(color: ColorsLight.appbar, width: 5)),
-                  onPressed: () async {
-                    Get.showSnackbar(GetSnackBar(
-                      title: "Response",
-                      message: await Get.dialog(DialogWrapper(child: TextEditorPage()), useSafeArea: true) ?? "Null",
-                      duration: const Duration(seconds: 1),
-                    ));
-                    // log();
-                  },
-                  child: const Icon(Icons.add),
-                ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-          bottomNavigationBar: BottomAppBar(
-            shape: const CircularNotchedRectangle(),
-            color: ColorsLight.appbar,
-            elevation: 8,
-            child: Row(
-              children: [
-                Expanded(
+    return Obx(() {
+      var selectedItemColor = AltColors.appbarX2;
+
+      var unselectedItemColor = Colors.grey.shade300;
+      return Scaffold(
+        backgroundColor: currentThemeModeLight.value ? Colors.grey.shade50 : ColorsDark.greyBlack,
+        floatingActionButton: MediaQuery.of(context).viewInsets.bottom != 0
+            ? null
+            : FloatingActionButton(
+                backgroundColor: AltColors.appbarX,
+                foregroundColor: Colors.white,
+                elevation: 0,
+                shape: const CircleBorder(side: BorderSide(color: ColorsLight.appbar, width: 5)),
+                onPressed: () async {
+                  Get.showSnackbar(GetSnackBar(
+                    title: "Response",
+                    message: await Get.dialog(DialogWrapper(child: TextEditorPage()), useSafeArea: true) ?? "Null",
+                    duration: const Duration(seconds: 1),
+                  ));
+                  // log();
+                },
+                child: const Icon(Icons.add),
+              ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: BottomAppBar(
+          shape: const CircularNotchedRectangle(),
+          color: AltColors.appbarX1,
+          elevation: 8,
+          child: Row(
+            children: [
+              Expanded(
                   flex: 2,
-                  child: TextButton(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.home,
-                          color: currentIndex.value == 0 ? selectedItemColor : unselectedItemColor,
-                        ),
-                        Text(currentIndex.value == 0 ? "FEED" : "", style: const TextStyle(color: Colors.white, fontSize: 13)),
-                      ],
-                    ),
+                  child: UnderlinedExpandingSelectorButton(
+                    text: "FEED",
+                    icon: Icons.home,
                     onPressed: () => currentIndex.value = 0,
-                  ),
+                    isSelected: currentIndex.value == 0,
+                    selectionColor: (selected) => selected ? selectedItemColor : unselectedItemColor,
+                  )),
+              Expanded(
+                flex: 2,
+                child: UnderlinedExpandingSelectorButton(
+                  text: "CHECKLIST",
+                  icon: Icons.check_circle,
+                  onPressed: () => currentIndex.value = 1,
+                  isSelected: currentIndex.value == 1,
+                  selectionColor: (selected) => selected ? selectedItemColor : unselectedItemColor,
                 ),
-                Expanded(
-                  flex: 2,
-                  child: TextButton(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.check_circle,
-                          color: currentIndex.value == 1 ? selectedItemColor : unselectedItemColor,
-                        ),
-                        Text(currentIndex.value == 1 ? "CHECKLIST" : "", style: const TextStyle(color: Colors.white, fontSize: 13)),
-                      ],
-                    ),
-                    onPressed: () => currentIndex.value = 1,
-                  ),
+              ),
+              const Expanded(child: SizedBox()),
+              Expanded(
+                flex: 2,
+                child: UnderlinedExpandingSelectorButton(
+                  text: "PROFILE",
+                  icon: Icons.account_circle_outlined,
+                  onPressed: () => currentIndex.value = 2,
+                  isSelected: currentIndex.value == 2,
+                  selectionColor: (selected) => selected ? selectedItemColor : unselectedItemColor,
                 ),
-                const Expanded(child: SizedBox()),
-                Expanded(
-                  flex: 2,
-                  child: TextButton(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.account_circle_outlined,
-                          color: currentIndex.value == 2 ? selectedItemColor : unselectedItemColor,
-                        ),
-                        Text(currentIndex.value == 2 ? "PROFILE" : "", style: const TextStyle(color: Colors.white, fontSize: 13)),
-                      ],
-                    ),
-                    onPressed: () => currentIndex.value = 2,
-                  ),
+              ),
+              Expanded(
+                flex: 2,
+                child: UnderlinedExpandingSelectorButton(
+                  text: "SETTINGS",
+                  icon: Icons.settings,
+                  onPressed: () => currentIndex.value = 3,
+                  isSelected: currentIndex.value == 3,
+                  selectionColor: (selected) => selected ? selectedItemColor : unselectedItemColor,
                 ),
-                Expanded(
-                  flex: 2,
-                  child: TextButton(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.settings,
-                          color: currentIndex.value == 3 ? selectedItemColor : unselectedItemColor,
-                        ),
-                        Text(
-                          currentIndex.value == 3 ? "SETTINGS" : "",
-                          style: const TextStyle(color: Colors.white, fontSize: 13),
-                        ),
-                      ],
-                    ),
-                    onPressed: () => currentIndex.value = 3,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-          body: SafeArea(
-            child: PageStorage(bucket: _bucket, child: _children[currentIndex.value]),
-          ),
-        ));
+        ),
+        body: SafeArea(
+          child: PageStorage(bucket: _bucket, child: _children[currentIndex.value]),
+        ),
+      );
+    });
   }
 
   onEditorRequest(PostInternal post) async {

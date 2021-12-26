@@ -14,12 +14,14 @@ class PostCard extends StatelessWidget {
         document: quill.Document.fromJson(json),
         selection: const TextSelection.collapsed(offset: 0),
       );
+      couldParseQuill = true;
     } catch (e) {
-      print(e);
-      _controller = quill.QuillController(
+      // print(e);
+      /* _controller = quill.QuillController(
         document: quill.Document()..insert(0, post.description ?? ""),
         selection: const TextSelection.collapsed(offset: 0),
-      );
+      );*/
+      couldParseQuill = false;
     }
   }
 
@@ -30,6 +32,8 @@ class PostCard extends StatelessWidget {
   bool highlight;
 
   late final quill.QuillController _controller;
+
+  bool couldParseQuill = false;
 
   @override
   Widget build(BuildContext context) {
@@ -88,17 +92,19 @@ class PostCard extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
-                        child: quill.QuillEditor(
-                          controller: _controller,
-                          focusNode: FocusNode(canRequestFocus: false, descendantsAreFocusable: false),
-                          autoFocus: false,
-                          padding: EdgeInsets.zero,
-                          expands: false,
-                          showCursor: false,
-                          scrollable: false,
-                          readOnly: true,
-                          scrollController: ScrollController(),
-                        ),
+                        child: couldParseQuill
+                            ? quill.QuillEditor(
+                                controller: _controller,
+                                focusNode: FocusNode(canRequestFocus: false, descendantsAreFocusable: false),
+                                autoFocus: false,
+                                padding: EdgeInsets.zero,
+                                expands: false,
+                                showCursor: false,
+                                scrollable: false,
+                                readOnly: true,
+                                scrollController: ScrollController(),
+                              )
+                            : Text(post.description ?? ""),
                       ),
                     ],
                   ),

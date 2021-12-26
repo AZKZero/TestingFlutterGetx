@@ -12,7 +12,7 @@ import 'package:projectx/controller/feed_controller.dart';
 import 'package:projectx/controller/network_controller.dart';
 import 'package:projectx/controller/selection_controller.dart';
 import 'package:projectx/controller/user_controller.dart';
-import 'package:projectx/ui/misc/alt_colors.dart';
+import 'package:projectx/ui/styles/alt_colors.dart';
 import 'package:projectx/ui/misc/testing_list.dart';
 import 'package:projectx/ui/misc/testing_list_2.dart';
 import 'package:projectx/ui/misc/testing_list_3.dart';
