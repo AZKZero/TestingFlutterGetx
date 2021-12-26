@@ -31,12 +31,14 @@ class FeedController extends GetxController {
     photos.value = (json.decode(await rootBundle.loadString("assets/jsons/photos/photos.json")) as List<dynamic>).map((e) => e as String).toList();
   }
 
-  Stream<List<PostInternal>>? getFeed() {
-    checkAndSeedFeed();
+  Stream<List<PostInternal>>? getFeed(String searchUnused) {
     return dbController.postDao?.getPosts().watch();
   }
 
   checkAndSeedFeed() async {
+    if (dbController.database == null) {
+      await dbController.initializeDB();
+    }
     int postCount = await dbController.postDao?.getPostCount().getSingle() ?? 0;
     if (postCount == 0) {
       var postList = (json.decode(await rootBundle.loadString("assets/jsons/posts/posts.json")) as List<dynamic>).map((e) => Post.fromJson(e as Map<String, dynamic>)).toList();

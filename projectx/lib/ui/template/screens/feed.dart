@@ -47,7 +47,7 @@ class Feed extends StatelessWidget {
                     },
                   ),
                 ),
-                Expanded(
+                /*Expanded(
                   child: ListView.builder(
                     itemCount: _feedController.feed.length,
                     itemBuilder: (context, index) {
@@ -66,7 +66,7 @@ class Feed extends StatelessWidget {
                       );
                     },
                   ),
-                ),
+                ),*/
                 /*..._feedController.feed
                     .map((element) => Center(
                           child: Container(

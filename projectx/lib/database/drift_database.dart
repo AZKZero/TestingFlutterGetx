@@ -32,13 +32,17 @@ class AltDriftDatabase extends _$AltDriftDatabase {
   // you should bump this number whenever you change or add a table definition. Migrations
   // are covered later in this readme.
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(onCreate: (Migrator m) {
         return m.createAll();
       }, onUpgrade: (Migrator m, int from, int to) async {
-        await Future.wait([m.deleteTable("blogs"), m.deleteTable("author_table"), m.deleteTable("log_table")]);
+        await m.deleteTable("blogs");
+        await m.deleteTable("author_table");
+        await m.deleteTable("log_table");
+        await m.deleteTable("post_table");
+        await m.createAll();
       });
 }
 

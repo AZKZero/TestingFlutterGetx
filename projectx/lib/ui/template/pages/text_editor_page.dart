@@ -1,16 +1,31 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
+import 'package:get/get.dart';
 import 'package:projectx/ui/misc/alt_colors.dart';
 
 class TextEditorPage extends StatelessWidget {
-  TextEditorPage({Key? key}) : super(key: key);
+  TextEditorPage({Key? key, this.oldData}) : super(key: key) {
+    try {
+      _quillController = quill.QuillController(
+        document: quill.Document.fromJson(jsonDecode(oldData ?? "")),
+        selection: const TextSelection.collapsed(offset: 0),
+      );
+    } catch (e) {
+      print(e);
+      _quillController = quill.QuillController(
+        document: quill.Document()..insert(0, oldData ?? ""),
+        selection: const TextSelection.collapsed(offset: 0),
+      );
+    }
+  }
 
-  final quill.QuillController _quillController = quill.QuillController.basic();
+  late final quill.QuillController _quillController;
   final FocusNode _focusNode = FocusNode();
+
+  String? oldData;
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:floor/floor.dart';
 import 'package:projectx/database/drift_database.dart';
 import 'package:projectx/database/models/server/post.dart';
 import 'package:projectx/database/structures/tables.dart';
@@ -10,4 +11,6 @@ class AltPostDao extends DatabaseAccessor<AltDriftDatabase> with _$AltPostDaoMix
   AltPostDao(AltDriftDatabase driftDatabase) : super(driftDatabase);
 
   Future<void> savePosts(List<Post> posts) async => await batch((batch) => batch.insertAllOnConflictUpdate(postTable, posts));
+
+  Future<void> savePost(PostInternal post) async => await into(postTable).insertOnConflictUpdate(post);
 }

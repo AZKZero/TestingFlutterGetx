@@ -14,7 +14,7 @@ class AppBindings implements Bindings {
     Get.lazyPut(() => DBController()..initializeDB());
     Get.lazyPut(() => SelectionController());
     Get.lazyPut(() => NetworkController());
-    Get.lazyPut(() => FeedController());
+    Get.lazyPut(() => FeedController()..checkAndSeedFeed());
     Get.lazyPut(() => UserController()..loadUser());
     Get.create<TaskController>(() => TaskController());
     Get.create<BlogController>(() => BlogController());

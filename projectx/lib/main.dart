@@ -17,7 +17,9 @@ import 'package:projectx/ui/misc/testing_list.dart';
 import 'package:projectx/ui/misc/testing_list_2.dart';
 import 'package:projectx/ui/misc/testing_list_3.dart';
 import 'package:projectx/ui/misc/tile_button.dart';
+import 'package:projectx/ui/template/screens/bottom_nav.dart';
 import 'package:projectx/ui/template/screens/landing_page.dart';
+import 'package:projectx/ui/template/screens/login_screen.dart';
 import 'package:projectx/ui/template/screens/testing_ground.dart';
 import 'package:projectx/ui/test/activity_main.dart';
 import 'package:projectx/utils/bindings.dart';
@@ -110,7 +112,12 @@ class MyApp extends StatelessWidget {
       initialBinding: bindings,
       // home: NewHomePage(title: 'Flutter Demo Home Page'),
       // home: LandingScreen(),
-      getPages: [GetPage(name: '/', page: () => LandingScreen(), binding: bindings)],
+      getPages: [
+        GetPage(name: '/', page: () => LandingScreen(), binding: bindings),
+        GetPage(name: '/login', page: () => LoginScreen(), binding: bindings),
+        GetPage(name: '/home', page: () => BottomNav(), binding: bindings),
+        // GetPage(name: '/', page: () => LandingScreen(), binding: bindings),
+      ],
     );
   }
 }

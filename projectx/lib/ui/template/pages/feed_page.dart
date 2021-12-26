@@ -3,13 +3,17 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/feed_controller.dart';
 import 'package:projectx/controller/user_controller.dart';
+import 'package:projectx/database/drift_database.dart';
 import 'package:projectx/database/models/server/post.dart';
 import 'package:projectx/ui/misc/alt_colors.dart';
 import 'package:projectx/ui/template/components/cards/post_card.dart';
 
 class FeedPage extends StatelessWidget {
-  FeedPage({Key? key}) : super(key: key) {
-    filtered = _feedController.feed;
+  FeedPage({
+    Key? key,
+    required this.onEdit,
+  }) : super(key: key) {
+    // filtered = _feedController.getFeed();
   }
 
   final FeedController _feedController = Get.find();
@@ -18,8 +22,9 @@ class FeedPage extends StatelessWidget {
   final FocusNode _textFocusNode = FocusNode();
 
   final usernameSearch = "".obs;
+  Function(PostInternal post) onEdit;
 
-  late final RxList<Post> filtered;
+  // late final RxList<Post> filtered;
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +37,12 @@ class FeedPage extends StatelessWidget {
                 focusNode: _textFocusNode,
                 onChanged: (value) {
                   usernameSearch.value = value;
-                  filtered.value = _feedController.feed
+                  /*filtered.value = _feedController.feed
                       .where((p0) =>
                           usernameSearch.value.isEmpty ||
                           (p0.username?.toLowerCase().contains(usernameSearch.value.toLowerCase()) ?? false) ||
                           (p0.description?.toLowerCase().contains(usernameSearch.value.toLowerCase()) ?? false))
-                      .toList();
+                      .toList();*/
                 },
                 cursorColor: Colors.white,
                 style: const TextStyle(color: Colors.white, decorationColor: Colors.white),
@@ -69,25 +74,36 @@ class FeedPage extends StatelessWidget {
               ),
             ),
             Expanded(
-                child: ListView.builder(
-              itemCount: filtered.length,
-              itemBuilder: (context, index) {
-                var element = filtered[index];
-                return Center(
-                  child: Container(
-                    constraints: BoxConstraints(
-                      maxWidth: MediaQuery.of(context).size.width * 0.95,
-                      minWidth: 10,
-                    ),
-                    child: PostCard(
-                      post: element,
-                      highlight: element.username == _userController.user.value?.username,
-                      onPressed: () => Get.back(result: {"result": element.toJson()}),
-                    ),
-                  ),
-                );
-              },
-            )),
+                child: StreamBuilder<List<PostInternal>?>(
+                    stream: _feedController.getFeed(usernameSearch.value),
+                    builder: (context, snapshot) {
+                      var filtered = snapshot.data
+                          ?.where((p0) =>
+                              usernameSearch.value.isEmpty ||
+                              (p0.username?.toLowerCase().contains(usernameSearch.value.toLowerCase()) ?? false) ||
+                              (p0.description?.toLowerCase().contains(usernameSearch.value.toLowerCase()) ?? false))
+                          .toList();
+                      return filtered != null
+                          ? ListView.builder(
+                              itemCount: filtered.length,
+                              itemBuilder: (context, index) {
+                                var element = filtered[index];
+                                return Center(
+                                  child: Container(
+                                    constraints: BoxConstraints(
+                                      maxWidth: MediaQuery.of(context).size.width * 0.95,
+                                      minWidth: 10,
+                                    ),
+                                    child: PostCard(
+                                        post: element,
+                                        highlight: element.username == _userController.user.value?.username,
+                                        onPressed: () => element.username == _userController.user.value?.username ? onEdit(element) : null),
+                                  ),
+                                );
+                              },
+                            )
+                          : const Text("Empty");
+                    })),
           ],
         ));
   }

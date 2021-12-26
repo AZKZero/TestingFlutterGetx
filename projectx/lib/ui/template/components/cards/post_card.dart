@@ -1,15 +1,35 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart' as quill;
+import 'package:projectx/database/drift_database.dart';
 import 'package:projectx/database/models/server/post.dart';
 
 class PostCard extends StatelessWidget {
-  PostCard({Key? key, required this.post, required this.onPressed, this.highlight = false}) : super(key: key);
+  PostCard({Key? key, required this.post, required this.onPressed, this.highlight = false}) : super(key: key) {
+    var json;
+    try {
+      json = jsonDecode(post.description ?? "");
+      _controller = quill.QuillController(
+        document: quill.Document.fromJson(json),
+        selection: const TextSelection.collapsed(offset: 0),
+      );
+    } catch (e) {
+      print(e);
+      _controller = quill.QuillController(
+        document: quill.Document()..insert(0, post.description ?? ""),
+        selection: const TextSelection.collapsed(offset: 0),
+      );
+    }
+  }
 
-  Post post;
+  PostInternal post;
 
   VoidCallback onPressed;
 
   bool highlight;
+
+  late final quill.QuillController _controller;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +87,19 @@ class PostCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Expanded(child: Text(post.description ?? "")),
+                      Expanded(
+                        child: quill.QuillEditor(
+                          controller: _controller,
+                          focusNode: FocusNode(canRequestFocus: false, descendantsAreFocusable: false),
+                          autoFocus: false,
+                          padding: EdgeInsets.zero,
+                          expands: false,
+                          showCursor: false,
+                          scrollable: false,
+                          readOnly: true,
+                          scrollController: ScrollController(),
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(

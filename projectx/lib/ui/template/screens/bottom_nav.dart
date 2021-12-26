@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/feed_controller.dart';
+import 'package:projectx/database/drift_database.dart';
 import 'package:projectx/main.dart';
 import 'package:projectx/ui/misc/alt_colors.dart';
 import 'package:projectx/ui/template/dialogs/dialog_wrapper.dart';
@@ -14,6 +15,15 @@ import 'package:projectx/ui/template/pages/text_editor_page.dart';
 class BottomNav extends StatelessWidget {
   BottomNav({Key? key}) : super(key: key) {
     _feedController.loadFeed();
+    _children = [
+      FeedPage(
+        key: const PageStorageKey(0),
+        onEdit: onEditorRequest,
+      ),
+      ChecklistPage(key: const PageStorageKey(1)),
+      ProfilePage(key: const PageStorageKey(2)),
+      SettingsPage(key: const PageStorageKey(3))
+    ];
   }
 
   final FeedController _feedController = Get.find();
@@ -22,14 +32,7 @@ class BottomNav extends StatelessWidget {
 
   final _bucket = PageStorageBucket();
 
-  final _children = [
-    FeedPage(
-      key: const PageStorageKey(0),
-    ),
-    ChecklistPage(key: const PageStorageKey(1)),
-    ProfilePage(key: const PageStorageKey(2)),
-    SettingsPage(key: const PageStorageKey(3))
-  ];
+  late final _children;
 
   final selectedItemColor = Colors.white;
   final unselectedItemColor = Colors.grey.shade300;
@@ -141,6 +144,19 @@ class BottomNav extends StatelessWidget {
             child: PageStorage(bucket: _bucket, child: _children[currentIndex.value]),
           ),
         ));
+  }
+
+  onEditorRequest(PostInternal post) async {
+    // log( ?? "Null");
+    var result = await Get.dialog(
+        DialogWrapper(
+            child: TextEditorPage(
+          oldData: post.description,
+        )),
+        useSafeArea: true);
+
+    var newPost = post.copyWith(description: result);
+    _feedController.dbController.postDao?.savePost(newPost);
   }
 }
 
