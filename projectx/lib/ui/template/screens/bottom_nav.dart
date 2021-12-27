@@ -47,6 +47,18 @@ class BottomNav extends StatelessWidget {
       var unselectedItemColor = Colors.grey.shade300;
       return Scaffold(
         backgroundColor: currentThemeModeLight.value ? Colors.grey.shade50 : ColorsDark.greyBlack,
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: ColorsLight.appbar,
+          // foregroundColor: Colors.transparent,
+
+          // flexibleSpace: AnnotatedRegion<SystemUiOverlayStyle>(value: const SystemUiOverlayStyle().copyWith(statusBarColor: ColorsLight.appbar), child: Container()),
+          actions: [IconButton(onPressed: () => _feedController.showSearch.toggle(), icon: const Icon(Icons.search))],
+          leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+          title: const Center(
+            child: Text("Feed"),
+          ),
+        ),
         floatingActionButton: MediaQuery.of(context).viewInsets.bottom != 0
             ? null
             : FloatingActionButton(
@@ -73,18 +85,18 @@ class BottomNav extends StatelessWidget {
             children: [
               Expanded(
                   flex: 2,
-                  child: UnderlinedExpandingSelectorButton(
-                    text: "FEED",
-                    icon: Icons.home,
+                  child: UnderlinedExpandingSelectorButtonWithAsset(
+                    text: "Feed",
+                    asset: "assets/images/icons/home.png",
                     onPressed: () => currentIndex.value = 0,
                     isSelected: currentIndex.value == 0,
                     selectionColor: (selected) => selected ? selectedItemColor : unselectedItemColor,
                   )),
               Expanded(
                 flex: 2,
-                child: UnderlinedExpandingSelectorButton(
-                  text: "CHECKLIST",
-                  icon: Icons.check_circle,
+                child: UnderlinedExpandingSelectorButtonWithAsset(
+                  text: "Checklist",
+                  asset: "assets/images/icons/notification.png",
                   onPressed: () => currentIndex.value = 1,
                   isSelected: currentIndex.value == 1,
                   selectionColor: (selected) => selected ? selectedItemColor : unselectedItemColor,
@@ -93,9 +105,9 @@ class BottomNav extends StatelessWidget {
               const Expanded(child: SizedBox()),
               Expanded(
                 flex: 2,
-                child: UnderlinedExpandingSelectorButton(
-                  text: "PROFILE",
-                  icon: Icons.account_circle_outlined,
+                child: UnderlinedExpandingSelectorButtonWithAsset(
+                  text: "Profile",
+                  asset: "assets/images/icons/user.png",
                   onPressed: () => currentIndex.value = 2,
                   isSelected: currentIndex.value == 2,
                   selectionColor: (selected) => selected ? selectedItemColor : unselectedItemColor,
@@ -103,9 +115,9 @@ class BottomNav extends StatelessWidget {
               ),
               Expanded(
                 flex: 2,
-                child: UnderlinedExpandingSelectorButton(
-                  text: "SETTINGS",
-                  icon: Icons.settings,
+                child: UnderlinedExpandingSelectorButtonWithAsset(
+                  text: "Settings",
+                  asset: "assets/images/icons/settings.png",
                   onPressed: () => currentIndex.value = 3,
                   isSelected: currentIndex.value == 3,
                   selectionColor: (selected) => selected ? selectedItemColor : unselectedItemColor,

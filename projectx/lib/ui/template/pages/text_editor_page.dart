@@ -36,54 +36,109 @@ class TextEditorPage extends StatelessWidget {
           minWidth: 10,
           minHeight: 10,
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.01),
+        child: Stack(
           children: [
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.01),
-                child: Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                  child: Padding(
-                      padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 10.0),
-                      // child: quill.QuillEditor.basic(controller: _quillController, readOnly: false),
-                      child: quill.QuillEditor(
-                        controller: _quillController,
-                        focusNode: _focusNode,
-                        autoFocus: true,
-                        padding: EdgeInsets.zero,
-                        expands: false,
-                        scrollable: true,
-                        readOnly: false,
-                        scrollController: ScrollController(),
-                      )),
+            Positioned.fill(
+              top: 5,
+              child: Card(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                clipBehavior: Clip.antiAlias,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                            child: const Text(
+                              "Edit/Create Post",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () => Get.back(),
+                          child: const Icon(Icons.close),
+                          // label: const Text(""),
+                          style: TextButton.styleFrom(
+                              primary: Colors.white,
+                              backgroundColor: Colors.red,
+                              minimumSize: Size.zero,
+                              padding: const EdgeInsets.all(10),
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15)))),
+                        )
+                      ],
+                    ),
+                    Expanded(
+                      child: Padding(
+                          padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                          // child: quill.QuillEditor.basic(controller: _quillController, readOnly: false),
+                          child: quill.QuillEditor(
+                            controller: _quillController,
+                            focusNode: _focusNode,
+                            autoFocus: true,
+                            padding: EdgeInsets.zero,
+                            expands: false,
+                            scrollable: true,
+                            readOnly: false,
+                            scrollController: ScrollController(),
+                          )),
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: quill.QuillToolbar.basic(
+                              controller: _quillController,
+                              showAlignmentButtons: true,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        /*Expanded(
+                          child: TextButton(
+                              style: TextButton.styleFrom(
+                                  backgroundColor: Colors.red,
+                                  primary: Colors.white,
+                                  minimumSize: Size.zero,
+                                  padding: const EdgeInsets.all(10),
+                                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                  shape: RoundedRectangleBorder()),
+                              onPressed: () => Get.back(),
+                              child: const Text("Close")),
+                        ),*/
+                        Expanded(
+                          child: TextButton(
+                              style: TextButton.styleFrom(
+                                  backgroundColor: AltColors.appbarX,
+                                  // backgroundColor: Colors.green,
+                                  primary: Colors.white,
+                                  minimumSize: Size.zero,
+                                  padding: const EdgeInsets.all(10),
+                                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                  shape: RoundedRectangleBorder()),
+                              onPressed: () {
+                                log(jsonEncode(_quillController.document.toDelta().toJson()), name: "Alt-X");
+                                log(jsonEncode(_quillController.document.toPlainText()), name: "Alt-X");
+
+                                Get.back(result: jsonEncode(_quillController.document.toDelta().toJson()));
+                              },
+                              child: const Text("Save")),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: ColorsLight.appbar),
-                onPressed: () {
-                  log(jsonEncode(_quillController.document.toDelta().toJson()), name: "Alt-X");
-                  log(jsonEncode(_quillController.document.toPlainText()), name: "Alt-X");
-
-                  Get.back(result: jsonEncode(_quillController.document.toDelta().toJson()));
-                },
-                child: const Text("print")),
-            // if (MediaQuery.of(context).viewInsets.bottom != 0)
-            Row(
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: quill.QuillToolbar.basic(
-                      controller: _quillController,
-                      showAlignmentButtons: true,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            // Positioned(top: 0, right: 0, child: TextButton.icon(label: Text(""), onPressed: () => Get.back(), icon: const Icon(Icons.close))),
           ],
         ));
   }

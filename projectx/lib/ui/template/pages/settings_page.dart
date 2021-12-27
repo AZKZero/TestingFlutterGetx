@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:projectx/main.dart';
 import 'package:projectx/ui/styles/alt_colors.dart';
+import 'package:projectx/ui/template/screens/testing_ground.dart';
 
 class SettingsPage extends StatelessWidget {
   SettingsPage({Key? key}) : super(key: key);
@@ -108,6 +108,14 @@ class SettingsPage extends StatelessWidget {
                       child: ElevatedButton(
                     onPressed: () async => changeThemeMode(),
                     child: const Text("Switch Theme"),
+                  )),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                      child: ElevatedButton(
+                    onPressed: () => Get.to(UITestingGrounds()),
+                    child: const Text("UI Testing Grounds"),
                   )),
                 ],
               ),

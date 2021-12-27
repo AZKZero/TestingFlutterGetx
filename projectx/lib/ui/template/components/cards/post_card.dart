@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:projectx/database/drift_database.dart';
-import 'package:projectx/database/models/server/post.dart';
 
 class PostCard extends StatelessWidget {
   PostCard({Key? key, required this.post, required this.onPressed, this.highlight = false}) : super(key: key) {
@@ -71,10 +70,7 @@ class PostCard extends StatelessWidget {
                       Container(
                         alignment: Alignment.bottomCenter,
                         padding: const EdgeInsets.fromLTRB(0, 0, 0, 8.0),
-                        child: const Icon(
-                          Icons.info,
-                          size: 10.0,
-                        ),
+                        child: Image.asset("assets/images/icons/time.png"),
                       ),
                       Container(
                           alignment: Alignment.centerLeft,
@@ -84,6 +80,11 @@ class PostCard extends StatelessWidget {
                             post.username ?? "",
                             style: TextStyle(color: highlight ? Colors.green : null),
                           )),
+                      const Spacer(),
+                      Container(
+                        alignment: Alignment.center,
+                        child: Image.asset("assets/images/icons/Share.png"),
+                      )
                     ],
                   ),
                   const SizedBox(
@@ -117,11 +118,49 @@ class PostCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      TextButton.icon(onPressed: () {}, icon: const Icon(Icons.comment), label: Text(post.comments?.toString() ?? "")),
+                      TextButton(
+                          onPressed: () {},
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                "assets/images/icons/Heart.png",
+                                fit: BoxFit.contain,
+                                // width: MediaQuery.of(context).size.height * 0.05,
+                                // height: MediaQuery.of(context).size.height * 0.05,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                post.likes?.toString() ?? "",
+                                style: const TextStyle(fontSize: 13),
+                              )
+                            ],
+                          )),
                       const SizedBox(
                         width: 8,
                       ),
-                      TextButton.icon(onPressed: () {}, icon: const Icon(Icons.favorite), label: Text(post.likes?.toString() ?? "")),
+                      TextButton(
+                          onPressed: () {},
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                "assets/images/icons/speech-bubble.png",
+                                fit: BoxFit.contain,
+                                // width: MediaQuery.of(context).size.height * 0.05,
+                                // height: MediaQuery.of(context).size.height * 0.05,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                post.comments?.toString() ?? "",
+                                style: const TextStyle(fontSize: 13),
+                              )
+                            ],
+                          )),
+                      // TextButton.icon(onPressed: () {}, icon: const Icon(Icons.comment), label: Text(post.comments?.toString() ?? "")),
+                      // TextButton.icon(onPressed: () {}, icon: const Icon(Icons.favorite), label: Text(post.likes?.toString() ?? "")),
                     ],
                   )
                 ],

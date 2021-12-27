@@ -12,6 +12,8 @@ import '../database/models/server/user.dart';
 class FeedController extends GetxController {
   final DBController dbController = Get.find();
 
+  var showSearch=false.obs;
+
   // ignore: unnecessary_cast
   RxList<Post> feed = List<Post>.empty().obs;
 

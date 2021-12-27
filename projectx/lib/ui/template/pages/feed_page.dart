@@ -13,6 +13,7 @@ class FeedPage extends StatelessWidget {
     required this.onEdit,
   }) : super(key: key) {
     // filtered = _feedController.getFeed();
+    _feedController.loadFeed();
     feed = _feedController.getFeed("");
   }
 
@@ -31,33 +32,35 @@ class FeedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          padding: const EdgeInsets.all(8.0),
-          decoration: const BoxDecoration(color: ColorsLight.appbar),
-          child: TextFormField(
-            focusNode: _textFocusNode,
-            onChanged: (value) {
-              usernameSearch.value = value;
-              /*filtered.value = _feedController.feed
+        Obx(() => _feedController.showSearch.value
+            ? Container(
+                padding: const EdgeInsets.all(8.0),
+                decoration: const BoxDecoration(color: ColorsLight.appbar),
+                child: TextFormField(
+                  focusNode: _textFocusNode,
+                  onChanged: (value) {
+                    usernameSearch.value = value;
+                    /*filtered.value = _feedController.feed
                       .where((p0) =>
                           usernameSearch.value.isEmpty ||
                           (p0.username?.toLowerCase().contains(usernameSearch.value.toLowerCase()) ?? false) ||
                           (p0.description?.toLowerCase().contains(usernameSearch.value.toLowerCase()) ?? false))
                       .toList();*/
-            },
-            cursorColor: Colors.white,
-            style: const TextStyle(color: Colors.white, decorationColor: Colors.white),
-            decoration: const InputDecoration(
-                focusColor: Colors.white,
-                border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
-                icon: Icon(
-                  Icons.search,
-                  color: Colors.white,
+                  },
+                  cursorColor: Colors.white,
+                  style: const TextStyle(color: Colors.white, decorationColor: Colors.white),
+                  decoration: const InputDecoration(
+                      focusColor: Colors.white,
+                      border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                      icon: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                      ),
+                      labelStyle: TextStyle(color: Colors.white),
+                      labelText: "Search"),
                 ),
-                labelStyle: TextStyle(color: Colors.white),
-                labelText: "Search"),
-          ),
-        ),
+              )
+            : const SizedBox(height: 0)),
         Container(
           constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.95, minWidth: 10, minHeight: 10, maxHeight: MediaQuery.of(context).size.height * 0.1),
           child: ListView.builder(
