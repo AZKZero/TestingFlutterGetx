@@ -5,18 +5,13 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/db_controller.dart';
-import 'package:projectx/controller/factories/blog_controller.dart';
-import 'package:projectx/controller/factories/dialog_controller.dart';
 import 'package:projectx/controller/factories/task_controller.dart';
-import 'package:projectx/controller/feed_controller.dart';
-import 'package:projectx/controller/network_controller.dart';
 import 'package:projectx/controller/selection_controller.dart';
-import 'package:projectx/controller/user_controller.dart';
-import 'package:projectx/ui/styles/alt_colors.dart';
 import 'package:projectx/ui/misc/testing_list.dart';
 import 'package:projectx/ui/misc/testing_list_2.dart';
 import 'package:projectx/ui/misc/testing_list_3.dart';
 import 'package:projectx/ui/misc/tile_button.dart';
+import 'package:projectx/ui/styles/alt_colors.dart';
 import 'package:projectx/ui/template/screens/bottom_nav.dart';
 import 'package:projectx/ui/template/screens/landing_page.dart';
 import 'package:projectx/ui/template/screens/login_screen.dart';
@@ -88,6 +83,8 @@ class MyApp extends StatelessWidget {
   late DBController controllerDB;
   StreamSubscription<ReceivedAction>? listen;
 
+  var bindings = AppBindings();
+
   MyApp({Key? key}) : super(key: key) {
     _getThemeStatus();
 
@@ -102,16 +99,15 @@ class MyApp extends StatelessWidget {
           log("notification ${receivedAction.buttonKeyPressed} ${receivedAction.groupKey} ${receivedAction.channelKey}");
         }));
 
-    var bindings = AppBindings();
-
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: _lightTheme,
       darkTheme: _darkTheme,
       themeMode: ThemeMode.light,
-      initialBinding: bindings,
+      // initialBinding: bindings,
       // home: NewHomePage(title: 'Flutter Demo Home Page'),
       // home: LandingScreen(),
+      initialRoute: '/',
       getPages: [
         GetPage(name: '/', page: () => LandingScreen(), binding: bindings),
         GetPage(name: '/login', page: () => LoginScreen(), binding: bindings),

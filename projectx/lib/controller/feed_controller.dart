@@ -12,10 +12,15 @@ import '../database/models/server/user.dart';
 class FeedController extends GetxController {
   final DBController dbController = Get.find();
 
-  var showSearch=false.obs;
+  FeedController() {
+    loadFeed();
+    checkAndSeedFeed();
+  }
+
+  var showSearch = false.obs;
 
   // ignore: unnecessary_cast
-  RxList<Post> feed = List<Post>.empty().obs;
+  // RxList<Post> feed = List<Post>.empty().obs;
 
   // ignore: unnecessary_cast
   RxList<Category> categories = List<Category>.empty().obs;
@@ -26,7 +31,7 @@ class FeedController extends GetxController {
   RxList<String> photos = List<String>.empty().obs;
 
   void loadFeed() async {
-    feed.value = (json.decode(await rootBundle.loadString("assets/jsons/posts/posts.json")) as List<dynamic>).map((e) => Post.fromJson(e as Map<String, dynamic>)).toList();
+    // feed.value = (json.decode(await rootBundle.loadString("assets/jsons/posts/posts.json")) as List<dynamic>).map((e) => Post.fromJson(e as Map<String, dynamic>)).toList();
     categories.value = (json.decode(await rootBundle.loadString("assets/jsons/categories/categories.json")) as List<dynamic>).map((e) => Category.fromJson(e as Map<String, dynamic>)).toList();
     users.value = (json.decode(await rootBundle.loadString("assets/jsons/users/users.json")) as List<dynamic>).map((e) => User.fromJson(e as Map<String, dynamic>)).toList();
 
@@ -37,14 +42,15 @@ class FeedController extends GetxController {
     return dbController.postDao?.getPosts().watch();
   }
 
-  checkAndSeedFeed() async {
+  Future<FeedController> checkAndSeedFeed() async {
     if (dbController.database == null) {
-      await dbController.initializeDB();
+      dbController.initializeDB();
     }
     int postCount = await dbController.postDao?.getPostCount().getSingle() ?? 0;
     if (postCount == 0) {
       var postList = (json.decode(await rootBundle.loadString("assets/jsons/posts/posts.json")) as List<dynamic>).map((e) => Post.fromJson(e as Map<String, dynamic>)).toList();
       await dbController.postDao?.savePosts(postList);
     }
+    return this;
   }
 }

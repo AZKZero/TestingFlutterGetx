@@ -7,7 +7,7 @@ import 'package:projectx/ui/template/screens/login_screen.dart';
 class LandingScreen extends StatelessWidget {
   LandingScreen({Key? key}) : super(key: key) {
     _userController.loaded.listen((p0) {
-      if (p0) Get.off(() => _userController.user.value != null ? BottomNav() : LoginScreen());
+      if (p0) Get.offAndToNamed(_userController.user.value != null ? '/home' : '/login');
     });
   }
 

@@ -106,7 +106,8 @@ class UITestingGrounds extends StatelessWidget {
                     Expanded(
                         child: OutlinedButton(
                       onPressed: () async {
-                        dialogController.result.value = await Get.to(() => LoginScreen());
+                        // dialogController.result.value = await Get.to(() => LoginScreen());
+                        dialogController.result.value = await Get.toNamed('/login') as Object;
                       },
                       child: const Text("Screen Login"),
                     )),
@@ -130,7 +131,7 @@ class UITestingGrounds extends StatelessWidget {
                     Expanded(
                         child: OutlinedButton(
                       onPressed: () async {
-                        dialogController.result.value = await Get.to(() => BottomNav());
+                        dialogController.result.value = await Get.offAndToNamed('/home');
                       },
                       child: const Text("Bottom Navigation"),
                     )),

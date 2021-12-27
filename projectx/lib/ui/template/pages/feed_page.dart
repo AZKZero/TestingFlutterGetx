@@ -64,6 +64,20 @@ class FeedPage extends StatelessWidget {
         Container(
           constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.95, minWidth: 10, minHeight: 10, maxHeight: MediaQuery.of(context).size.height * 0.1),
           child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 10,
+              itemBuilder: (context, index) => Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Image.network(
+                      "https://i.pravatar.cc/250",
+                      height: 50,
+                      width: 50,
+                    ),
+                  )),
+        ),
+        Container(
+          constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.95, minWidth: 10, minHeight: 10, maxHeight: MediaQuery.of(context).size.height * 0.1),
+          child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: _feedController.categories.length,
             itemBuilder: (context, index) {

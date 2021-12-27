@@ -13,7 +13,7 @@ class DBController extends GetxController {
   AltDriftDatabase? database;
   AltPostDao? postDao;
 
-  Future<void> initializeDB() async {
+  DBController initializeDB() {
     /*database = await $FloorExtensionFloorDatabase.databaseBuilder('app_database.db').addMigrations([
       Migration(1, 2, (database) async {
         database.execute("DROP TABLE logs");
@@ -27,5 +27,6 @@ class DBController extends GetxController {
     blogDao = database?.altBlogDao;
     logDao = database?.altLogDao;
     postDao = database?.altPostDao;
+    return this;
   }
 }

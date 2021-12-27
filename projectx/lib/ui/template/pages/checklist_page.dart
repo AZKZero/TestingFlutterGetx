@@ -73,6 +73,7 @@ class ChecklistPage extends StatelessWidget {
                                           children: [
                                             ..._feedController.users
                                                 .map((user) => FormBuilderCheckbox(
+                                                      focusOnChange: false,
                                                       activeColor: currentThemeModeLight.value ? ColorsLight.appbar : Colors.green,
                                                       name: user.username ?? "x",
                                                       title: Text(user.username ?? "x"),
