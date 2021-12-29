@@ -16,6 +16,11 @@ class AltColors {
     false: Colors.white,
   });
 
+  static const DarkAwareColor _backgroundX = DarkAwareColor(0xFFFE654F, <bool, Color>{
+    false: Colors.white,
+    true: Colors.transparent,
+  });
+
   static const DarkAwareColor _textNormalX = DarkAwareColor(0xFFFE654F, <bool, Color>{
     true: Colors.white,
     false: Colors.black,
@@ -27,10 +32,15 @@ class AltColors {
   });
 
   static Color get appbarX => _appbarX.get(!currentThemeModeLight.value);
+
   static Color get appbarX1 => _appbarX1.get(!currentThemeModeLight.value);
+
   static Color get appbarX2 => _appbarX1.get(currentThemeModeLight.value);
 
+  static Color get backgroundX => _backgroundX.get(!currentThemeModeLight.value);
+
   static Color get textNormalX => _textNormalX.get(!currentThemeModeLight.value);
+
   static Color get textHighlightX => _textHighlightX.get(!currentThemeModeLight.value);
 }
 

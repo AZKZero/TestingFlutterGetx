@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:projectx/main.dart';
+import 'package:projectx/ui/misc/interfaces/titled_page.dart';
 import 'package:projectx/ui/styles/alt_colors.dart';
 import 'package:projectx/ui/template/screens/testing_ground.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatelessWidget implements TitledPage {
+  @override
+  String get title => "Settings";
+
   SettingsPage({Key? key}) : super(key: key);
 
   var switchState1 = false.obs;

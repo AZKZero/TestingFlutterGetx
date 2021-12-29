@@ -2,10 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:projectx/ui/misc/interfaces/titled_page.dart';
 import 'package:projectx/ui/template/components/cards/card_style_1.dart';
 import 'package:projectx/ui/template/components/image_loader.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatelessWidget implements TitledPage {
+  @override
+  String get title => "Profile";
+
   ProfilePage({Key? key}) : super(key: key);
 
   var switchState1 = false.obs;

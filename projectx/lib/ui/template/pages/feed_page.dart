@@ -4,10 +4,14 @@ import 'package:get/get.dart';
 import 'package:projectx/controller/feed_controller.dart';
 import 'package:projectx/controller/user_controller.dart';
 import 'package:projectx/database/drift_database.dart';
+import 'package:projectx/ui/misc/interfaces/titled_page.dart';
 import 'package:projectx/ui/styles/alt_colors.dart';
 import 'package:projectx/ui/template/components/cards/post_card.dart';
 
-class FeedPage extends StatelessWidget {
+class FeedPage extends StatelessWidget implements TitledPage {
+  @override
+  String get title => "Feed";
+
   FeedPage({
     Key? key,
     required this.onEdit,

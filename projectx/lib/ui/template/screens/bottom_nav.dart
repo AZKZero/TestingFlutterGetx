@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:projectx/controller/feed_controller.dart';
 import 'package:projectx/database/drift_database.dart';
 import 'package:projectx/main.dart';
+import 'package:projectx/ui/misc/interfaces/titled_page.dart';
 import 'package:projectx/ui/styles/alt_colors.dart';
 import 'package:projectx/ui/template/components/buttons/underlined_expanding_selector_button.dart';
 import 'package:projectx/ui/template/dialogs/dialog_wrapper.dart';
@@ -55,8 +56,8 @@ class BottomNav extends StatelessWidget {
           // flexibleSpace: AnnotatedRegion<SystemUiOverlayStyle>(value: const SystemUiOverlayStyle().copyWith(statusBarColor: ColorsLight.appbar), child: Container()),
           actions: [IconButton(onPressed: () => _feedController.showSearch.toggle(), icon: const Icon(Icons.search))],
           leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
-          title: const Center(
-            child: Text("Feed"),
+          title: Center(
+            child: Text((_children[currentIndex.value] as TitledPage).title),
           ),
         ),
         floatingActionButton: MediaQuery.of(context).viewInsets.bottom != 0
