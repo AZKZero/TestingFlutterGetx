@@ -112,6 +112,23 @@ class PostCard extends StatelessWidget {
                   const SizedBox(
                     height: 8,
                   ),
+                  if ((post.images?.length ?? 0) >= 1)
+                    Container(
+                        // constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.15),
+                        child: Image.network(
+                      post.images?[0] ?? "",
+                      fit: BoxFit.contain,
+                    )),
+                  if ((post.images?.length ?? 0) > 1)
+                    Container(
+                        // constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.1),
+                        child: Row(
+                      children: [
+                        // ListBase()
+                        if ((post.images?.length ?? 0) >= 2) Expanded(child: Image.network(post.images?[1] ?? "", fit: BoxFit.fitWidth)),
+                        if ((post.images?.length ?? 0) >= 3) Expanded(child: Image.network(post.images?[2] ?? "", fit: BoxFit.fitWidth))
+                      ],
+                    )),
                   Divider(
                     thickness: 1,
                     color: Colors.grey.withOpacity(0.5),

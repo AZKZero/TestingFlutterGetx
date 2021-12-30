@@ -55,6 +55,8 @@ class PostTable extends Table {
   Column<bool?> get isLiked => boolean().named("is_liked").nullable()();
 
   Column<int?> get comments => integer().nullable()();
+
+  Column<String?> get images => text().map(const ListConverter()).nullable()();
 }
 
 class Users extends Table {

@@ -32,7 +32,7 @@ class AltDriftDatabase extends _$AltDriftDatabase {
   // you should bump this number whenever you change or add a table definition. Migrations
   // are covered later in this readme.
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(onCreate: (Migrator m) {
@@ -50,7 +50,7 @@ class ListConverter extends TypeConverter<List<String>, String> {
   const ListConverter();
 
   @override
-  List<String>? mapToDart(String? fromDb) => fromDb == null ? null : (jsonDecode(fromDb) as List<dynamic>).cast<String>();
+  List<String>? mapToDart(String? fromDb) => fromDb == null ? null : (jsonDecode(fromDb) as List<dynamic>?)?.cast<String>();
 
   @override
   String? mapToSql(List<String>? value) => jsonEncode(value);

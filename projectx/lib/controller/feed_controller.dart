@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -35,7 +36,7 @@ class FeedController extends GetxController {
     categories.value = (json.decode(await rootBundle.loadString("assets/jsons/categories/categories.json")) as List<dynamic>).map((e) => Category.fromJson(e as Map<String, dynamic>)).toList();
     users.value = (json.decode(await rootBundle.loadString("assets/jsons/users/users.json")) as List<dynamic>).map((e) => User.fromJson(e as Map<String, dynamic>)).toList();
 
-    photos.value = (json.decode(await rootBundle.loadString("assets/jsons/photos/photos.json")) as List<dynamic>).map((e) => e as String).toList();
+    // photos.value = (json.decode(await rootBundle.loadString("assets/jsons/photos/photos.json")) as List<dynamic>).map((e) => e as String).toList();
   }
 
   Stream<List<PostInternal>>? getFeed(String searchUnused) {
@@ -46,9 +47,13 @@ class FeedController extends GetxController {
     if (dbController.database == null) {
       dbController.initializeDB();
     }
+    List<Post> postList = (json.decode(await rootBundle.loadString("assets/jsons/posts/posts.json")) as List<dynamic>).map((e) => Post.fromJson(e as Map<String, dynamic>)).toList();
+    /*Map<int, List<String>> photosList =
+        (json.decode(await rootBundle.loadString("assets/jsons/photos/photos.json")) as List<dynamic>).map((e) => (e as List<dynamic>).map((e) => e as String).toList()).toList().asMap();*/
     int postCount = await dbController.postDao?.getPostCount().getSingle() ?? 0;
+    log("postCount $postCount");
+    log("posts= ${(await dbController.postDao?.getPosts().get()).toString()}");
     if (postCount == 0) {
-      var postList = (json.decode(await rootBundle.loadString("assets/jsons/posts/posts.json")) as List<dynamic>).map((e) => Post.fromJson(e as Map<String, dynamic>)).toList();
       await dbController.postDao?.savePosts(postList);
     }
     return this;

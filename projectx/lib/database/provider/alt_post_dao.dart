@@ -12,5 +12,7 @@ class AltPostDao extends DatabaseAccessor<AltDriftDatabase> with _$AltPostDaoMix
 
   Future<void> savePosts(List<Post> posts) async => await batch((batch) => batch.insertAllOnConflictUpdate(postTable, posts));
 
+  Future<void> savePostsInternal(List<PostInternal> posts) async => await batch((batch) => batch.insertAllOnConflictUpdate(postTable, posts));
+
   Future<void> savePost(PostInternal post) async => await into(postTable).insertOnConflictUpdate(post);
 }

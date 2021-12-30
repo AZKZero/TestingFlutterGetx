@@ -8,8 +8,9 @@ class Post implements Insertable<PostInternal> {
   int? likes;
   bool? isLiked;
   int? comments;
+  List<String>? images;
 
-  Post({this.username, this.avatar, this.likes, this.isLiked, this.comments, this.description});
+  Post({this.username, this.avatar, this.likes, this.isLiked, this.comments, this.description, this.images});
 
   factory Post.fromJson(Map<String, dynamic> json) => Post(
         username: json['username'],
@@ -18,6 +19,7 @@ class Post implements Insertable<PostInternal> {
         isLiked: json['is_liked'],
         comments: json['comments'],
         description: json['description'],
+        images: (json['images'] as List<dynamic>?)?.map((e) => e as String).toList(),
       );
 
   Map<String, dynamic> toJson() {
@@ -28,6 +30,7 @@ class Post implements Insertable<PostInternal> {
     data['is_liked'] = isLiked;
     data['comments'] = comments;
     data['description'] = description;
+    data['images'] = images;
     return data;
   }
 
@@ -41,6 +44,7 @@ class Post implements Insertable<PostInternal> {
       likes: Value(likes),
       isLiked: Value(isLiked),
       comments: Value(comments),
+      images: Value(images),
     ).toColumns(nullToAbsent);
   }
 }

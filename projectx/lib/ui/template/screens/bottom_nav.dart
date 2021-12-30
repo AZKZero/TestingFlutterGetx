@@ -45,7 +45,7 @@ class BottomNav extends StatelessWidget {
     return Obx(() {
       var selectedItemColor = AltColors.appbarX2;
 
-      var unselectedItemColor = Colors.grey.shade300;
+      var unselectedItemColor = AltColors.unselectedX;
       return Scaffold(
         backgroundColor: currentThemeModeLight.value ? Colors.grey.shade50 : ColorsDark.greyBlack,
         appBar: AppBar(
