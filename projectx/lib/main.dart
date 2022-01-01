@@ -95,15 +95,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    if (listen != null) {
+    listen ??= AwesomeNotifications().actionStream.listen((ReceivedAction receivedAction) {
+      log("notification ${receivedAction.buttonKeyPressed} ${receivedAction.groupKey} ${receivedAction.channelKey}");
+    }); /* else {
       listen?.cancel().then((value) => listen = AwesomeNotifications().actionStream.listen((ReceivedAction receivedAction) {
             log("notification ${receivedAction.buttonKeyPressed} ${receivedAction.groupKey} ${receivedAction.channelKey}");
           }));
-    } else {
-      listen = AwesomeNotifications().actionStream.listen((ReceivedAction receivedAction) {
-        log("notification ${receivedAction.buttonKeyPressed} ${receivedAction.groupKey} ${receivedAction.channelKey}");
-      });
-    }
+    }*/
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: _lightTheme,

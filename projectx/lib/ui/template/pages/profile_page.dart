@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projectx/ui/misc/interfaces/titled_page.dart';
 import 'package:projectx/ui/template/components/cards/card_style_1.dart';
-import 'package:projectx/ui/template/components/image_loader.dart';
+import 'package:projectx/ui/template/components/image/image_loader.dart';
 
 class ProfilePage extends StatelessWidget implements TitledPage {
   @override

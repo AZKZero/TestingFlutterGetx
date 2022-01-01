@@ -2,7 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
+import 'package:get/get.dart';
 import 'package:projectx/database/drift_database.dart';
+import 'package:projectx/ui/template/components/image/clickable_image.dart';
+import 'package:projectx/ui/template/components/image/view_image.dart';
 
 class PostCard extends StatelessWidget {
   PostCard({Key? key, required this.post, required this.onPressed, this.highlight = false}) : super(key: key) {
@@ -115,18 +118,17 @@ class PostCard extends StatelessWidget {
                   if ((post.images?.length ?? 0) >= 1)
                     Container(
                         // constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.15),
-                        child: Image.network(
-                      post.images?[0] ?? "",
-                      fit: BoxFit.contain,
-                    )),
+                        child: ClickableImage(url: post.images?[0], isNetwork: true, onPressed: () => ViewImage.launch(image: post.images?[0] ?? "", post: post))),
                   if ((post.images?.length ?? 0) > 1)
                     Container(
                         // constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.1),
                         child: Row(
                       children: [
                         // ListBase()
-                        if ((post.images?.length ?? 0) >= 2) Expanded(child: Image.network(post.images?[1] ?? "", fit: BoxFit.fitWidth)),
-                        if ((post.images?.length ?? 0) >= 3) Expanded(child: Image.network(post.images?[2] ?? "", fit: BoxFit.fitWidth))
+                        if ((post.images?.length ?? 0) >= 2)
+                          Expanded(child: ClickableImage(url: post.images?[1], isNetwork: true, onPressed: () => ViewImage.launch(image: post.images?[1] ?? "", post: post))),
+                        if ((post.images?.length ?? 0) >= 3)
+                          Expanded(child: ClickableImage(url: post.images?[2], isNetwork: true, onPressed: () => ViewImage.launch(image: post.images?[2] ?? "", post: post)))
                       ],
                     )),
                   Divider(
