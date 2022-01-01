@@ -81,19 +81,19 @@ class FeedPage extends StatelessWidget implements TitledPage {
         ),
         Container(
           constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.95, minWidth: 10, minHeight: 10, maxHeight: MediaQuery.of(context).size.height * 0.1),
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: _feedController.categories.length,
-            itemBuilder: (context, index) {
-              var image = _feedController.categories[index].image;
-              return image != null
-                  ? Image.asset(
-                      image,
-                      height: MediaQuery.of(context).size.height * 0.1,
-                    )
-                  : const Text("No Image Found");
-            },
-          ),
+          child: Obx(() => ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: _feedController.categories.length,
+                itemBuilder: (context, index) {
+                  var image = _feedController.categories[index].image;
+                  return image != null
+                      ? Image.asset(
+                          image,
+                          height: MediaQuery.of(context).size.height * 0.1,
+                        )
+                      : const Text("No Image Found");
+                },
+              )),
         ),
         Expanded(
             child: StreamBuilder<List<PostInternal>?>(

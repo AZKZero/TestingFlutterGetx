@@ -23,7 +23,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'controller/factories/task_controller.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  // WidgetsFlutterBinding.ensureInitialized();
 
   AwesomeNotifications().initialize(
       // set the icon to null if you want to use the default app icon
@@ -95,10 +95,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    listen?.cancel().then((value) => listen = AwesomeNotifications().actionStream.listen((ReceivedAction receivedAction) {
-          log("notification ${receivedAction.buttonKeyPressed} ${receivedAction.groupKey} ${receivedAction.channelKey}");
-        }));
-
+    if (listen != null) {
+      listen?.cancel().then((value) => listen = AwesomeNotifications().actionStream.listen((ReceivedAction receivedAction) {
+            log("notification ${receivedAction.buttonKeyPressed} ${receivedAction.groupKey} ${receivedAction.channelKey}");
+          }));
+    } else {
+      listen = AwesomeNotifications().actionStream.listen((ReceivedAction receivedAction) {
+        log("notification ${receivedAction.buttonKeyPressed} ${receivedAction.groupKey} ${receivedAction.channelKey}");
+      });
+    }
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: _lightTheme,

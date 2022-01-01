@@ -15,15 +15,17 @@ class LandingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<UserController>(
-      builder: (p0) {
-        return Container(
-          alignment: Alignment.center,
-          child: const CircularProgressIndicator(
-            value: null,
-          ),
-        );
-      },
+    return Scaffold(
+      body: GetBuilder<UserController>(
+        builder: (p0) {
+          return Container(
+            alignment: Alignment.center,
+            child: const CircularProgressIndicator(
+              value: null,
+            ),
+          );
+        },
+      ),
     );
   }
 }

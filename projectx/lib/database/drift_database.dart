@@ -32,7 +32,7 @@ class AltDriftDatabase extends _$AltDriftDatabase {
   // you should bump this number whenever you change or add a table definition. Migrations
   // are covered later in this readme.
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 6;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(onCreate: (Migrator m) {
