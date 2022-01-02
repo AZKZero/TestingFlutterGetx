@@ -12,7 +12,7 @@ import 'package:projectx/ui/misc/testing_list_2.dart';
 import 'package:projectx/ui/misc/testing_list_3.dart';
 import 'package:projectx/ui/misc/tile_button.dart';
 import 'package:projectx/ui/styles/alt_colors.dart';
-import 'package:projectx/ui/template/screens/bottom_nav.dart';
+import 'package:projectx/ui/template/screens/home/bottom_nav.dart';
 import 'package:projectx/ui/template/screens/landing_page.dart';
 import 'package:projectx/ui/template/screens/login_screen.dart';
 import 'package:projectx/ui/template/screens/testing_ground.dart';

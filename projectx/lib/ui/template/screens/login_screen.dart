@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:projectx/controller/user_controller.dart';
 import 'package:projectx/database/models/server/user.dart';
 import 'package:projectx/ui/styles/alt_colors.dart';
-import 'package:projectx/ui/template/screens/bottom_nav.dart';
+import 'package:projectx/ui/template/screens/home/bottom_nav.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key) {

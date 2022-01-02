@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/feed_controller.dart';
 import 'package:projectx/ui/styles/alt_colors.dart';
-import 'package:projectx/ui/template/components/cards/post_card.dart';
+import 'package:projectx/ui/template/screens/feed/post_card.dart';
 
 class Feed extends StatelessWidget {
   Feed({Key? key}) : super(key: key) {

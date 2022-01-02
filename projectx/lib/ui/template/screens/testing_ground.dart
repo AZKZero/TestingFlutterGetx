@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/factories/dialog_controller.dart';
 import 'package:projectx/main.dart';
-import 'package:projectx/ui/template/screens/bottom_nav.dart';
-import 'package:projectx/ui/template/screens/checklist.dart';
+import 'package:projectx/ui/template/screens/checklist/checklist.dart';
+import 'package:projectx/ui/template/screens/home/bottom_nav.dart';
 import 'package:projectx/ui/template/dialogs/dialog1.dart';
 import 'package:projectx/ui/template/dialogs/dialog_login.dart';
 import 'package:projectx/ui/template/dialogs/dialog_login_alt.dart';
 import 'package:projectx/ui/template/dialogs/dialog_login_otp.dart';
 import 'package:projectx/ui/template/dialogs/dialog_wrapper.dart';
-import 'package:projectx/ui/template/screens/feed.dart';
+import 'package:projectx/ui/template/screens/feed/feed.dart';
 import 'package:projectx/ui/template/screens/image_gallery.dart';
 import 'package:projectx/ui/template/screens/login_screen.dart';
-import 'package:projectx/ui/template/screens/profile_screen.dart';
-import 'package:projectx/ui/template/screens/settings.dart';
-import 'package:projectx/ui/template/screens/text_editor_screen.dart';
+import 'package:projectx/ui/template/screens/profile/profile_screen.dart';
+import 'package:projectx/ui/template/screens/settings/settings.dart';
+import 'package:projectx/ui/template/screens/feed/text_editor_screen.dart';
 
 class UITestingGrounds extends StatelessWidget {
   UITestingGrounds({Key? key}) : super(key: key);

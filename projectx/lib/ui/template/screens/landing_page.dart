@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/user_controller.dart';
-import 'package:projectx/ui/template/screens/bottom_nav.dart';
+import 'package:projectx/ui/template/screens/home/bottom_nav.dart';
 import 'package:projectx/ui/template/screens/login_screen.dart';
 
 class LandingScreen extends StatelessWidget {

@@ -6,13 +6,14 @@ import 'package:projectx/database/drift_database.dart';
 import 'package:projectx/main.dart';
 import 'package:projectx/ui/misc/interfaces/titled_page.dart';
 import 'package:projectx/ui/styles/alt_colors.dart';
-import 'package:projectx/ui/template/components/buttons/underlined_expanding_selector_button.dart';
 import 'package:projectx/ui/template/dialogs/dialog_wrapper.dart';
-import 'package:projectx/ui/template/pages/checklist_page.dart';
-import 'package:projectx/ui/template/pages/feed_page.dart';
-import 'package:projectx/ui/template/pages/profile_page.dart';
-import 'package:projectx/ui/template/pages/settings_page.dart';
-import 'package:projectx/ui/template/pages/text_editor_page.dart';
+import 'package:projectx/ui/template/screens/checklist/checklist_page.dart';
+import 'package:projectx/ui/template/screens/feed/feed_page.dart';
+import 'package:projectx/ui/template/screens/profile/profile_page.dart';
+import 'package:projectx/ui/template/screens/settings/settings_page.dart';
+import 'package:projectx/ui/template/screens/feed/text_editor_page.dart';
+
+import 'buttons/underlined_expanding_selector_button.dart';
 
 class BottomNav extends StatelessWidget {
   BottomNav({Key? key}) : super(key: key) {
@@ -66,7 +67,7 @@ class BottomNav extends StatelessWidget {
                 backgroundColor: AltColors.appbarX,
                 foregroundColor: Colors.white,
                 elevation: 0,
-                shape: const CircleBorder(side: BorderSide(color: ColorsLight.appbar, width: 5)),
+                // shape: const CircleBorder(side: BorderSide(color: ColorsLight.appbar, width: 5)),
                 onPressed: () async {
                   Get.showSnackbar(GetSnackBar(
                     title: "Response",

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:projectx/ui/template/screens/bottom_nav.dart';
+import 'package:projectx/ui/template/screens/home/bottom_nav.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../database/models/server/user.dart';
