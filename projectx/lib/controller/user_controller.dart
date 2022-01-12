@@ -29,6 +29,7 @@ class UserController extends GetxController {
 
   saveUser([bool reset = false, User? userX]) async {
     await _prefs.then((SharedPreferences prefs) => prefs.setString("user", userX != null ? jsonEncode(userX.toJson()) : ""));
+    user.value = userX;
     if (reset) Get.offNamedUntil('/home', ModalRoute.withName('/home'));
   }
 }
