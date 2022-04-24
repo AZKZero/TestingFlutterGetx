@@ -1,25 +1,112 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/factories/dialog_controller.dart';
 import 'package:projectx/main.dart';
-import 'package:projectx/ui/template/screens/checklist/checklist.dart';
-import 'package:projectx/ui/template/screens/home/bottom_nav.dart';
 import 'package:projectx/ui/template/dialogs/dialog1.dart';
 import 'package:projectx/ui/template/dialogs/dialog_login.dart';
 import 'package:projectx/ui/template/dialogs/dialog_login_alt.dart';
 import 'package:projectx/ui/template/dialogs/dialog_login_otp.dart';
 import 'package:projectx/ui/template/dialogs/dialog_wrapper.dart';
+import 'package:projectx/ui/template/screens/checklist/checklist.dart';
 import 'package:projectx/ui/template/screens/feed/feed.dart';
+import 'package:projectx/ui/template/screens/feed/text_editor_screen.dart';
 import 'package:projectx/ui/template/screens/image_gallery.dart';
-import 'package:projectx/ui/template/screens/login_screen.dart';
 import 'package:projectx/ui/template/screens/profile/profile_screen.dart';
 import 'package:projectx/ui/template/screens/settings/settings.dart';
-import 'package:projectx/ui/template/screens/feed/text_editor_screen.dart';
 
 class UITestingGrounds extends StatelessWidget {
   UITestingGrounds({Key? key}) : super(key: key);
 
   DialogController dialogController = Get.find();
+
+  bool onIosBackground(ServiceInstance service) {
+    WidgetsFlutterBinding.ensureInitialized();
+    debugPrint('FLUTTER BACKGROUND FETCH');
+
+    return true;
+  }
+
+  void onStart(ServiceInstance service) {
+    if (service is AndroidServiceInstance) {
+      service.on('setAsForeground').listen((event) {
+        service.setAsForegroundService();
+      });
+
+      service.on('setAsBackground').listen((event) {
+        service.setAsBackgroundService();
+      });
+    }
+
+    service.on('stopService').listen((event) {
+      service.stopSelf();
+    });
+
+    // bring to foreground
+    Timer.periodic(const Duration(seconds: 1), (timer) async {
+      if (service is AndroidServiceInstance) {
+        service.setForegroundNotificationInfo(
+          title: "My App Service",
+          content: "Updated at ${DateTime.now()}",
+        );
+      }
+
+      /// you can see this log in logcat
+      print('FLUTTER BACKGROUND SERVICE: ${DateTime.now()}');
+
+      // test using external plugin
+      final deviceInfo = DeviceInfoPlugin();
+      String? device;
+      if (Platform.isAndroid) {
+        final androidInfo = await deviceInfo.androidInfo;
+        device = androidInfo.model;
+      }
+
+      if (Platform.isIOS) {
+        final iosInfo = await deviceInfo.iosInfo;
+        device = iosInfo.model;
+      }
+
+      service.invoke(
+        'update',
+        {
+          "current_date": DateTime.now().toIso8601String(),
+          "device": device,
+        },
+      );
+    });
+  }
+
+  final FlutterBackgroundService service = FlutterBackgroundService();
+
+  Future<void> initializeService() async {
+    await service.configure(
+      androidConfiguration: AndroidConfiguration(
+        // this will executed when app is in foreground or background in separated isolate
+        onStart: onStart,
+
+        // auto start service
+        autoStart: false,
+        isForegroundMode: true,
+      ),
+      iosConfiguration: IosConfiguration(
+        // auto start service
+        autoStart: false,
+
+        // this will executed when app is in foreground in separated isolate
+        onForeground: onStart,
+
+        // you have to enable background fetch capability on xcode project
+        onBackground: onIosBackground,
+      ),
+    );
+    service.startService();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -207,6 +294,30 @@ class UITestingGrounds extends StatelessWidget {
                     )),
                   ],
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
+                FutureBuilder<bool>(
+                    future: service.isRunning(),
+                    builder: (context, snapshot) {
+                      return Row(
+                        children: [
+                          Expanded(
+                              child: OutlinedButton(
+                            onPressed: snapshot.hasData && (snapshot.data ?? false) ? null : () => initializeService(),
+                            child: Text(snapshot.hasData && (snapshot.data ?? false) ? "Service Running" : "Start Service"),
+                          )),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                              child: OutlinedButton(
+                            onPressed: snapshot.hasData && (snapshot.data ?? false) ? () => service.invoke('stopService') : null,
+                            child: Text(snapshot.hasData && (snapshot.data ?? false) ? "Stop Service" : "Service Not Running"),
+                          )),
+                        ],
+                      );
+                    }),
               ],
             ),
           ),

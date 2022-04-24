@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
-import 'package:get/get.dart';
 import 'package:projectx/database/drift_database.dart';
 import 'package:projectx/ui/template/components/image/clickable_image.dart';
 import 'package:projectx/ui/template/components/image/view_image.dart';
@@ -110,19 +109,17 @@ class PostCard extends StatelessWidget {
                               )
                             : Text(post.description ?? ""),
                       ),
+                      /*Expanded(
+                        child: Text(couldParseQuill ? quill.Document.fromJson(jsonDecode(post.description ?? "")).toPlainText() : post.description ?? ""),
+                      ),*/
                     ],
                   ),
                   const SizedBox(
                     height: 8,
                   ),
-                  if ((post.images?.length ?? 0) >= 1)
-                    Container(
-                        // constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.15),
-                        child: ClickableImage(url: post.images?[0], isNetwork: true, onPressed: () => ViewImage.launch(image: post.images?[0] ?? "", post: post))),
+                  if ((post.images?.length ?? 0) >= 1) ClickableImage(url: post.images?[0], isNetwork: true, onPressed: () => ViewImage.launch(image: post.images?[0] ?? "", post: post)),
                   if ((post.images?.length ?? 0) > 1)
-                    Container(
-                        // constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.1),
-                        child: Row(
+                    Row(
                       children: [
                         // ListBase()
                         if ((post.images?.length ?? 0) >= 2)
@@ -130,7 +127,7 @@ class PostCard extends StatelessWidget {
                         if ((post.images?.length ?? 0) >= 3)
                           Expanded(child: ClickableImage(url: post.images?[2], isNetwork: true, onPressed: () => ViewImage.launch(image: post.images?[2] ?? "", post: post)))
                       ],
-                    )),
+                    ),
                   Divider(
                     thickness: 1,
                     color: Colors.grey.withOpacity(0.5),

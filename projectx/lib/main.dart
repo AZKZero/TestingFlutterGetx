@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/db_controller.dart';
 import 'package:projectx/controller/factories/task_controller.dart';
@@ -41,7 +42,20 @@ void main() async {
       // Channel groups are only visual and are not required
       channelGroups: [NotificationChannelGroup(channelGroupkey: 'basic_channel_group', channelGroupName: 'Basic group')],
       debug: true);
+  /*FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+// initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
+  const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
+  final IOSInitializationSettings initializationSettingsIOS = IOSInitializationSettings();
+  const MacOSInitializationSettings initializationSettingsMacOS = MacOSInitializationSettings();
+  final InitializationSettings initializationSettings = InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS, macOS: initializationSettingsMacOS);
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: selectNotification);*/
   runApp(MyApp());
+}
+
+void selectNotification(String? payload) async {
+  if (payload != null) {
+    debugPrint('notification payload: $payload');
+  }
 }
 
 ThemeData _darkTheme = ThemeData(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projectx/controller/feed_controller.dart';
-import 'package:projectx/ui/template/components/grid/quilted.dart';
 import 'package:projectx/ui/template/components/image/image_loader.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 

@@ -9,9 +9,9 @@ import 'package:projectx/ui/styles/alt_colors.dart';
 import 'package:projectx/ui/template/dialogs/dialog_wrapper.dart';
 import 'package:projectx/ui/template/screens/checklist/checklist_page.dart';
 import 'package:projectx/ui/template/screens/feed/feed_page.dart';
+import 'package:projectx/ui/template/screens/feed/text_editor_page.dart';
 import 'package:projectx/ui/template/screens/profile/profile_page.dart';
 import 'package:projectx/ui/template/screens/settings/settings_page.dart';
-import 'package:projectx/ui/template/screens/feed/text_editor_page.dart';
 
 import 'buttons/underlined_expanding_selector_button.dart';
 
@@ -55,7 +55,7 @@ class BottomNav extends StatelessWidget {
           // foregroundColor: Colors.transparent,
 
           // flexibleSpace: AnnotatedRegion<SystemUiOverlayStyle>(value: const SystemUiOverlayStyle().copyWith(statusBarColor: ColorsLight.appbar), child: Container()),
-          actions: [IconButton(onPressed: () => _feedController.showSearch.toggle(), icon: const Icon(Icons.search))],
+          actions: [if (currentIndex.value == 0) IconButton(onPressed: () => _feedController.showSearch.toggle(), icon: const Icon(Icons.search))],
           leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
           title: Center(
             child: Text((_children[currentIndex.value] as TitledPage).title),

@@ -1,5 +1,4 @@
 import 'package:drift/drift.dart';
-import 'package:floor/floor.dart';
 import 'package:projectx/database/drift_database.dart';
 import 'package:projectx/database/models/server/post.dart';
 import 'package:projectx/database/structures/tables.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pinput/pin_put/pin_put.dart';
+import 'package:pinput/pinput.dart';
 
 class DialogLoginOTP extends StatelessWidget {
   DialogLoginOTP({Key? key}) : super(key: key) {
@@ -54,32 +54,34 @@ class DialogLoginOTP extends StatelessWidget {
                     ),
                   ),*/
 
-                      PinPut(
+                      Pinput(
                         // inputDecoration: InputDecoration(icon: IconButton(onPressed: () => tosX.text = "", icon: const Icon(Icons.cancel))),
-                        fieldsCount: 7,
+                        length: 7,
                         // initialValue: stringX.value,
                         autofocus: true,
                         focusNode: _pinPutNode,
-                        withCursor: true,
+                        showCursor: true,
                         // onSubmit: (pin) => Get.back(result: pin),
                         /* onChanged: (value) {
                           stringX.value = value;
                           allowSubmit.value = value.length == 7;
                         },*/
                         controller: tosX,
-                        submittedFieldDecoration: _pinPutDecoration.copyWith(
+                        submittedPinTheme: PinTheme(
+                            decoration: _pinPutDecoration.copyWith(
                           // borderRadius: BorderRadius.circular(20.0),
                           border: Border(bottom: BorderSide(color: allowSubmit.value ? Colors.green : Colors.red)),
                           // border: Border.all(color: allowSubmit.value ? Colors.green : Colors.red),
-                        ),
-                        selectedFieldDecoration: _pinPutDecoration,
-                        followingFieldDecoration: _pinPutDecoration.copyWith(
+                        )),
+                        focusedPinTheme: PinTheme(decoration: _pinPutDecoration),
+                        followingPinTheme: PinTheme(
+                            decoration: _pinPutDecoration.copyWith(
                           // borderRadius: BorderRadius.circular(5.0),
                           border: Border(bottom: BorderSide(color: allowSubmit.value ? Colors.green : Colors.red)),
                           /* border: Border.all(
                         color: Colors.deepPurpleAccent.withOpacity(.5),
                       ),*/
-                        ),
+                        )),
                       ),
 
                       /*OTPTextField(
